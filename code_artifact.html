@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>말랑말랑 독도 탐험대 - AI 독도 퀴즈 게임</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Nanum Pen Script & Gowun Dodum) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Gowun Dodum', sans-serif;
+            background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+        }
+        .fancy-title {
+            font-family: 'Nanum Pen Script', cursive;
+        }
+        /* 파도 애니메이션 */
+        @keyframes wave {
+            0%, 100% { transform: translateY(0) scaleY(1); }
+            50% { transform: translateY(-10px) scaleY(1.05); }
+        }
+        .animate-wave {
+            animation: wave 4s ease-in-out infinite;
+        }
+        .animate-wave-delayed {
+            animation: wave 4s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden text-slate-800">
+
+    <!-- 상단 헤더 -->
+    <header class="w-full bg-white/80 backdrop-blur-md border-b border-sky-100 py-3 px-4 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <button onclick="goHome()" class="flex items-center gap-2 text-sky-600 font-bold text-lg hover:scale-105 transition-transform">
+                <span class="text-2xl">🏝️</span>
+                <span class="fancy-title text-3xl tracking-wider">독도 탐험대</span>
+            </button>
+            <div class="flex items-center gap-3">
+                <button onclick="toggleAudio()" id="bgm-btn" class="p-2 bg-sky-100 hover:bg-sky-200 rounded-full transition-colors" title="배경음악 켜기/끄기">
+                    <i data-lucide="volume-2" class="w-5 h-5 text-sky-600"></i>
+                </button>
+                <button onclick="openSettings()" class="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors" title="설정">
+                    <i data-lucide="settings" class="w-5 h-5 text-slate-600"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="flex-grow max-w-4xl w-full mx-auto p-4 flex flex-col justify-center items-center relative z-10">
+        
+        <!-- 1. 메인 홈 화면 -->
+        <div id="screen-home" class="w-full text-center py-8 space-y-8 max-w-md mx-auto">
+            <div class="relative inline-block">
+                <!-- 뒤쪽 귀여운 독도 일러스트 대체 (SVG) -->
+                <div class="w-64 h-48 mx-auto relative animate-wave">
+                    <!-- 서도 -->
+                    <svg class="absolute bottom-4 left-4 w-32 h-32 text-emerald-500 fill-current drop-shadow-lg" viewBox="0 0 100 100">
+                        <path d="M 10,90 Q 30,20 60,40 Q 80,50 90,90 Z" />
+                    </svg>
+                    <!-- 동도 -->
+                    <svg class="absolute bottom-2 right-4 w-28 h-28 text-emerald-600 fill-current drop-shadow-lg" viewBox="0 0 100 100">
+                        <path d="M 10,90 Q 40,10 70,50 Q 85,60 95,90 Z" />
+                    </svg>
+                    <!-- 등대 -->
+                    <div class="absolute right-12 bottom-20 w-4 h-12 bg-white border-2 border-slate-700 rounded-t-md">
+                        <div class="w-6 h-4 bg-red-500 -ml-1 rounded-t-sm"></div>
+                        <div class="absolute top-1 left-1 w-2 h-2 bg-yellow-300 rounded-full animate-ping"></div>
+                    </div>
+                    <!-- 태극기 -->
+                    <div class="absolute left-16 bottom-24 flex items-start">
+                        <div class="w-1 h-12 bg-amber-800"></div>
+                        <div class="w-6 h-4 bg-white border border-slate-300 flex items-center justify-center font-bold text-[6px] text-blue-800 relative overflow-hidden">
+                            <span class="text-[8px] text-red-500 absolute">☯</span>
+                        </div>
+                    </div>
+                    <!-- 귀여운 강치 캐릭터 -->
+                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 bg-amber-100 border-2 border-amber-900 rounded-full px-3 py-1 text-xs font-bold shadow-md flex items-center gap-1">
+                        <span>🦭 안녕! 난 강치야!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <h1 class="text-5xl font-black text-sky-800 fancy-title drop-shadow">말랑말랑 독도 탐험대</h1>
+                <p class="text-slate-600 font-medium">인공지능과 함께 떠나는 신나는 독도 퀴즈 여행! 🏝️</p>
+            </div>
+
+            <div class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-xl border border-white space-y-4 text-left">
+                <h3 class="font-bold text-sky-900 flex items-center gap-2">
+                    <i data-lucide="compass" class="w-5 h-5 text-sky-500"></i>
+                    탐험 규칙을 알아볼까요?
+                </h3>
+                <ul class="text-sm text-slate-600 space-y-2 list-disc list-inside">
+                    <li>30개의 다양한 독도 퀴즈 중 <span class="text-rose-500 font-bold">5문제</span>가 매번 랜덤으로 나와요!</li>
+                    <li>헷갈릴 때는 언제든 <span class="text-emerald-600 font-bold">💡 AI 돋보기 힌트</span>를 누르세요.</li>
+                    <li>문제를 모두 맞히고 멋진 <span class="text-amber-500 font-bold">독도 수호 대장 임명장</span>을 완성해보세요.</li>
+                </ul>
+            </div>
+
+            <button onclick="startGame()" class="w-full py-4 bg-gradient-to-r from-sky-500 to-emerald-500 hover:from-sky-600 hover:to-emerald-600 text-white font-bold text-xl rounded-2xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 group">
+                <span>독도로 출발하기!</span>
+                <i data-lucide="arrow-right" class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+            </button>
+        </div>
+
+        <!-- 2. 게임 화면 (퀴즈 진행) -->
+        <div id="screen-game" class="w-full max-w-2xl bg-white/90 backdrop-blur rounded-3xl p-6 md:p-8 shadow-2xl border border-white space-y-6 hidden">
+            <!-- 상태 진행 바 -->
+            <div class="space-y-2">
+                <div class="flex justify-between items-center text-sm font-bold text-sky-700">
+                    <span id="quiz-progress-text">탐험 단계: 1 / 5</span>
+                    <span id="score-text" class="flex items-center gap-1 text-amber-500">
+                        <i data-lucide="sparkles" class="w-4 h-4 fill-current"></i> 점수: 0점
+                    </span>
+                </div>
+                <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border border-slate-200">
+                    <div id="quiz-progress-bar" class="bg-gradient-to-r from-sky-400 to-emerald-400 h-full rounded-full transition-all duration-300" style="width: 20%;"></div>
+                </div>
+            </div>
+
+            <!-- 퀴즈 문제 카드 -->
+            <div class="bg-gradient-to-br from-sky-50 to-white p-6 rounded-2xl border border-sky-100 text-center space-y-4">
+                <div class="inline-block bg-sky-100 text-sky-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider" id="quiz-category">
+                    독도의 자연
+                </div>
+                <h2 id="quiz-question" class="text-xl md:text-2xl font-bold text-slate-800 leading-relaxed">
+                    독도는 크게 두 개의 큰 섬과 주변의 작은 섬들로 이루어져 있어요. 이 두 큰 섬의 이름은 무엇일까요?
+                </h2>
+            </div>
+
+            <!-- 보기 선택지 버튼 영역 -->
+            <div id="quiz-options" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <!-- 동적으로 생성됩니다 -->
+            </div>
+
+            <!-- AI 힌트 및 서포트 영역 -->
+            <div class="border-t border-slate-100 pt-5 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <!-- 강치 캐릭터 프로필 -->
+                    <div class="w-12 h-12 bg-amber-100 rounded-full border-2 border-amber-400 flex items-center justify-center shrink-0">
+                        <span class="text-2xl">🦭</span>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="font-bold text-slate-700 text-sm">도우미 강치</h4>
+                        <p id="helper-bubble" class="text-xs text-slate-500">어려우면 언제든 AI 힌트를 켜줘!</p>
+                    </div>
+                </div>
+
+                <!-- 힌트 보기 버튼 -->
+                <button onclick="requestAIHint()" class="w-full md:w-auto px-5 py-3 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 font-bold rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95">
+                    <span class="animate-bounce">💡</span>
+                    <span>AI 돋보기 힌트 보기</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. 결과 및 임명장 화면 -->
+        <div id="screen-result" class="w-full max-w-xl bg-white/95 backdrop-blur rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-double border-amber-300 text-center space-y-8 hidden relative overflow-hidden">
+            
+            <!-- 축하 데코레이션 배경 -->
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-300"></div>
+            
+            <div class="space-y-2">
+                <div class="text-6xl animate-bounce">🏆</div>
+                <h2 class="text-4xl font-extrabold text-amber-600 fancy-title">축하합니다!</h2>
+                <p class="text-slate-600 font-medium">당신은 독도의 훌륭한 친구가 되었어요!</p>
+            </div>
+
+            <!-- 임명장 원본 스타일 영역 -->
+            <div class="bg-amber-50/50 border-2 border-amber-200 rounded-2xl p-6 md:p-8 space-y-6 relative text-left shadow-inner">
+                <!-- 전통 배경 무늬 느낌 물씬 -->
+                <div class="absolute inset-4 border border-dashed border-amber-200 pointer-events-none rounded-lg"></div>
+                
+                <h3 class="text-3xl font-bold text-center text-slate-800 fancy-title tracking-widest mt-2">임 명 장</h3>
+                
+                <div class="space-y-4 relative z-10 text-sm md:text-base text-slate-700 leading-loose">
+                    <p class="font-bold"><span class="text-sky-600 text-lg">이름:</span> <span id="cert-user-name" class="border-b border-slate-400 px-2 pb-1 text-lg font-extrabold text-slate-900">독도지킴이 어린이</span></p>
+                    <p class="font-bold"><span class="text-sky-600 text-lg">임무:</span> <span class="text-slate-900">우리 땅 독도를 아끼고 널리 알리기</span></p>
+                    
+                    <p class="text-slate-600 text-justify indent-4 pt-2">
+                        위 어린이는 <span class="font-bold text-slate-800">'말랑말랑 독도 탐험대'</span>의 모든 퀴즈를 성실히 풀어내어, 독도가 역사적, 지리적으로 우리의 자랑스러운 대한민국 영토임을 멋지게 증명하였습니다. 이에 미래의 독도 수호 대장으로 임명합니다.
+                    </p>
+                </div>
+
+                <div class="text-right space-y-1 relative z-10 text-xs md:text-sm text-slate-500 font-semibold pt-4">
+                    <p id="cert-date">2026년 5월 27일</p>
+                    <p class="text-slate-700 font-bold text-base flex items-center justify-end gap-1">
+                        말랑말랑 독도 탐험 본부 
+                        <span class="w-10 h-10 bg-rose-500/20 text-rose-600 border-2 border-rose-600 rounded-full flex items-center justify-center font-bold text-[10px] transform rotate-12 select-none">참잘했어요</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 점수 표시 및 버튼 -->
+            <div class="space-y-4">
+                <p class="font-bold text-slate-600">
+                    최종 탐험 점수: <span id="final-score" class="text-2xl text-rose-500 font-black">100</span> / 100점
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button onclick="shareCertificate()" class="py-3 px-5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="share-2" class="w-5 h-5"></i>
+                        <span>임명장 복사하기</span>
+                    </button>
+                    <button onclick="restartGame()" class="py-3 px-5 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-xl shadow transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                        <span>처음부터 다시하기</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 하단 푸터 -->
+    <footer class="w-full text-center py-4 text-xs text-sky-700/60 font-medium relative z-10">
+        <p>© 2026 말랑말랑 독도 탐험대 • 우리 땅 독도를 사랑합시다 🇰🇷</p>
+    </footer>
+
+    <!-- ==============================================
+         모달 영역들 (설정 모달, 정답/오답 팝업, AI힌트 팝업)
+         ============================================== -->
+
+    <!-- 이름 입력 모달 (게임 시작 전) -->
+    <div id="modal-name" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-5 shadow-2xl border border-slate-100 text-center transform scale-95 transition-transform duration-300">
+            <div class="text-4xl">🏷️</div>
+            <h3 class="text-2xl font-black text-slate-800 fancy-title">대원 이름을 적어줘!</h3>
+            <p class="text-sm text-slate-500">임명장에 적힐 이름을 입력하면 탐험을 시작할 수 있어요.</p>
+            <input type="text" id="user-name-input" value="독도사랑이" placeholder="예: 홍길동" class="w-full px-4 py-3 border-2 border-sky-200 focus:border-sky-500 focus:ring-0 rounded-xl text-center font-bold text-lg outline-none transition-colors">
+            <button onclick="confirmNameAndStart()" class="w-full py-3 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-xl shadow-lg transition-all active:scale-95">
+                준비 완료! 출발!
+            </button>
+        </div>
+    </div>
+
+    <!-- 정답 / 오답 알림 모달 -->
+    <div id="modal-feedback" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div id="feedback-card" class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-6 shadow-2xl text-center transform scale-95 transition-transform duration-300">
+            <!-- 아이콘 영역 -->
+            <div id="feedback-icon" class="text-7xl animate-bounce">🎉</div>
+            <div class="space-y-2">
+                <h3 id="feedback-title" class="text-2xl font-black text-emerald-600">정답입니다!</h3>
+                <p id="feedback-desc" class="text-slate-600 text-sm leading-relaxed">독도는 동도와 서도로 나뉘어 있답니다.</p>
+            </div>
+            
+            <!-- 해설 박스 -->
+            <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-left text-xs text-slate-500 leading-relaxed">
+                <strong class="text-slate-700 block mb-1">💡 지식 더하기:</strong>
+                <span id="feedback-explanation">독도는 동도와 서도라는 2개의 큰 섬과 주변의 89개 작은 바위섬들로 이루어져 있어요!</span>
+            </div>
+
+            <button onclick="closeFeedbackAndNext()" class="w-full py-3 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-xl shadow-md transition-all active:scale-95">
+                다음 단계로 가기!
+            </button>
+        </div>
+    </div>
+
+    <!-- AI 힌트 모달 -->
+    <div id="modal-hint" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl p-6 max-w-md w-full space-y-5 shadow-2xl border border-slate-100 transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeHint()" class="absolute top-4 right-4 p-1 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-2xl">💡</div>
+                <div class="text-left">
+                    <h3 class="text-xl font-bold text-slate-800">AI 돋보기 힌트</h3>
+                    <p class="text-xs text-slate-400">인공지능 도우미가 친절하게 알려줍니다!</p>
+                </div>
+            </div>
+
+            <!-- 힌트 로딩 상태 -->
+            <div id="hint-loading" class="hidden flex flex-col items-center justify-center py-8 space-y-3">
+                <div class="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+                <p class="text-sm font-bold text-emerald-600 animate-pulse">AI 강치가 힌트를 생각하고 있어요...</p>
+            </div>
+
+            <!-- 힌트 본문 -->
+            <div id="hint-content" class="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-5 text-sm text-slate-700 leading-relaxed whitespace-pre-line text-left">
+                독도는 대한민국의 가장 동쪽에 있는 아름다운 섬이에요! 동도와 서도라는 쌍둥이 같은 큰 섬 두 개가 핵심이랍니다.
+            </div>
+
+            <button onclick="closeHint()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl shadow-md transition-all active:scale-95">
+                이해했어요! 정답 맞히러 가기
+            </button>
+        </div>
+    </div>
+
+    <!-- 설정 모달 -->
+    <div id="modal-settings" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-5 shadow-2xl border border-slate-100">
+            <h3 class="text-2xl font-black text-slate-800 fancy-title text-center">탐험 본부 설정</h3>
+            
+            <div class="space-y-4 text-left">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-500 block">인공지능 API 설정 (선택사항)</label>
+                    <p class="text-[10px] text-slate-400 leading-normal">본 기능을 위해 API 키를 입력하면 나만의 진짜 AI 힌트를 실시간으로 제공받을 수 있어요. 입력하지 않으면 준비된 기본 힌트가 출력됩니다.</p>
+                    <input type="password" id="api-key-input" placeholder="AI API 키를 여기에 입력하세요" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm font-mono focus:border-sky-500 outline-none">
+                </div>
+            </div>
+
+            <button onclick="saveSettings()" class="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl shadow transition-all active:scale-95">
+                설정 저장하고 돌아가기
+            </button>
+        </div>
+    </div>
+
+    <!-- ==============================================
+         사운드 재생용 Web Audio API 및 사운드 이펙트
+         ============================================== -->
+    <script>
+        // Web Audio API를 활용한 효과음 생성기 (외부 오디오 파일 로드 에러 방지)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let bgmOscillator = null;
+        let bgmGainNode = null;
+        let bgmEnabled = false;
+
+        function playSoundEffect(type) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if (type === 'correct') {
+                    // 기분 좋은 '도-미-솔-도' 효과음
+                    const notes = [523.25, 659.25, 783.99, 1046.50];
+                    notes.forEach((freq, index) => {
+                        osc.frequency.setValueAtTime(freq, ctx.currentTime + (index * 0.12));
+                    });
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.6);
+                } else if (type === 'wrong') {
+                    // 아쉬운 저음 '웅~' 효과음
+                    osc.frequency.setValueAtTime(220, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.4);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.4);
+                } else if (type === 'click') {
+                    // 가벼운 '톡' 소리
+                    osc.frequency.setValueAtTime(800, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.1);
+                }
+            } catch (e) {
+                console.log('Audio Context 재생 에러 (유저가 페이지와 상호작용하기 전일 수 있음):', e);
+            }
+        }
+
+        // 간단한 멜로디의 가상 배경음악 재생 기능
+        function toggleAudio() {
+            playSoundEffect('click');
+            const btn = document.getElementById('bgm-btn');
+            if (bgmEnabled) {
+                stopBGM();
+                btn.innerHTML = `<i data-lucide="volume-x" class="w-5 h-5 text-slate-400"></i>`;
+                bgmEnabled = false;
+            } else {
+                startBGM();
+                btn.innerHTML = `<i data-lucide="volume-2" class="w-5 h-5 text-sky-600"></i>`;
+                bgmEnabled = true;
+            }
+            lucide.createIcons();
+        }
+
+        function startBGM() {
+            try {
+                if (bgmOscillator) return;
+                
+                bgmGainNode = audioCtx.createGain();
+                bgmGainNode.gain.setValueAtTime(0.02, audioCtx.currentTime); // 매우 조용하게 설정
+                bgmGainNode.connect(audioCtx.destination);
+
+                let noteIndex = 0;
+                // 평화롭고 상큼한 동요풍 멜로디 (학교종이 땡땡땡 변형 스타일)
+                const melody = [392, 392, 440, 440, 392, 392, 329, 392, 392, 329, 329, 294];
+                const beats = [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.8, 0.4, 0.4, 0.4, 0.4, 0.8];
+                
+                let nextTime = audioCtx.currentTime;
+
+                function playNextNote() {
+                    if (!bgmEnabled) return;
+                    
+                    bgmOscillator = audioCtx.createOscillator();
+                    bgmOscillator.type = 'triangle'; // 부드러운 파형 선택
+                    bgmOscillator.frequency.setValueAtTime(melody[noteIndex], nextTime);
+                    bgmOscillator.connect(bgmGainNode);
+                    
+                    bgmOscillator.start(nextTime);
+                    const duration = beats[noteIndex];
+                    bgmOscillator.stop(nextTime + duration - 0.05);
+
+                    nextTime += duration;
+                    noteIndex = (noteIndex + 1) % melody.length;
+                    
+                    setTimeout(playNextNote, duration * 1000);
+                }
+                
+                playNextNote();
+            } catch (e) {
+                console.log('BGM 재생 에러:', e);
+            }
+        }
+
+        function stopBGM() {
+            if (bgmOscillator) {
+                try {
+                    bgmOscillator.stop();
+                } catch(e){}
+                bgmOscillator = null;
+            }
+            bgmEnabled = false;
+        }
+    </script>
+
+    <!-- ==============================================
+         게임 데이터 및 주요 로직 스크립트 (30개 문제 은행)
+         ============================================== -->
+    <script>
+        // 초등학교 3학년 눈높이에 맞춘 독도 퀴즈 은행 데이터 (총 30문제)
+        const quizBank = [
+            {
+                category: "독도의 이름",
+                question: "독도는 크게 두 개의 엄청 커다란 섬과 그 주변의 89개 작은 돌섬들로 이루어져 있어요. 이 커다란 쌍둥이 섬 두 개의 멋진 이름은 무엇일까요?",
+                options: [
+                    { text: "큰도와 작은도", correct: false },
+                    { text: "동도와 서도", correct: true },
+                    { text: "남도와 북도", correct: false },
+                    { text: "바다도와 하늘도", correct: false }
+                ],
+                explanation: "독도에서 가장 크고 대표적인 두 섬은 동쪽에 있는 '동도'와 서쪽에 있는 '서도'예요!",
+                helperMessage: "해 뜨는 동쪽과 해 지는 서쪽의 방향 이름을 잘 생각해보세요! '동쪽 섬, 서쪽 섬'이란 뜻이랍니다.",
+                aiPrompt: "어린이가 독도가 동도와 서도로 이뤄져 있다는 걸 맞혀야 해. 어린이 눈높이에 맞는 귀엽고 따뜻한 힌트를 제공해줘."
+            },
+            {
+                category: "독도의 상징",
+                question: "옛날 독도에는 바다사자의 친구이자 수영을 아주 잘하던 이 동물이 수만 마리나 살고 있었어요. 사람들의 사냥 때문에 지금은 사라진 이 귀여운 동물의 이름은 무엇일까요?",
+                options: [
+                    { text: "강치", correct: true },
+                    { text: "북극곰", correct: false },
+                    { text: "돌고래", correct: false },
+                    { text: "펭귄", correct: false }
+                ],
+                explanation: "귀여운 동해의 바다사자 '강치'는 일제강점기 때 무분별한 가죽 사냥을 당해 지금은 멸종되어 사라졌답니다. 우리가 꼭 기억해줘야 해요.",
+                helperMessage: "이 동물 이름의 첫 글자는 '강'이에요! 귀여운 바다사자의 이름은 무엇일까요?",
+                aiPrompt: "독도 강치에 대한 힌트를 주려고 해. 강치라는 정답을 유추할 수 있도록 사랑스럽게 힌트를 제공해줘."
+            },
+            {
+                category: "독도의 역사",
+                question: "신라시대에 '이 장군님'이 나무 사자를 앞세워 독도가 속했던 옛 섬나라(우산국)를 대한민국 영토로 만들었어요. 이 멋진 장군님의 이름은 누구일까요?",
+                options: [
+                    { text: "이순신 장군", correct: false },
+                    { text: "이사부 장군", correct: true },
+                    { text: "을지문덕 장군", correct: false },
+                    { text: "김유신 장군", correct: false }
+                ],
+                explanation: "신라 지증왕 때 이사부 장군이 울릉도와 독도가 있던 '우산국'을 정벌하여 이때부터 울릉도와 독도가 우리 역사에 공식적으로 들어오게 되었습니다.",
+                helperMessage: "이름이 '이O부' 장군님이에요. 이 씨 성을 가진 멋진 장군님입니다!",
+                aiPrompt: "이사부 장군에 관한 힌트를 준비해줘. 힌트에 이O부 글자를 조합할 수 있도록 도와줘."
+            },
+            {
+                category: "독도의 자연생물",
+                question: "독도의 밤하늘을 나는 귀여운 바다새로, 괭이(고양이) 울음소리와 비슷한 소리를 낸다고 해서 이름 붙여진 독도의 마스코트 새는 무엇일까요?",
+                options: [
+                    { text: "독수리", correct: false },
+                    { text: "참새", correct: false },
+                    { text: "괭이갈매기", correct: true },
+                    { text: "비둘기", correct: false }
+                ],
+                explanation: "울음소리가 '야옹 야옹' 고양이 소리와 비슷해서 '괭이(고양이의 방언)갈매기'라고 불리는 새예요. 독도에 많이 살아요.",
+                helperMessage: "고양이를 뜻하는 '괭이'가 앞에 붙는 갈매기예요. 고양이 울음소리를 내는 신기한 새랍니다!",
+                aiPrompt: "괭이갈매기에 대해 초등용 힌트를 준비해줘. 야옹하는 고양이 울음소리가 난다는 점을 강조해줘."
+            },
+            {
+                category: "독도의 지리",
+                question: "우리의 소중한 땅 독도는 대한민국의 행정구역 중 어디에 속해 있을까요?",
+                options: [
+                    { text: "제주특별자치도", correct: false },
+                    { text: "경상북도 울릉군", correct: true },
+                    { text: "전라남도 여수시", correct: false },
+                    { text: "경기도 수원시", correct: false }
+                ],
+                explanation: "독도의 실제 주소는 '경상북도 울릉군 울릉읍 독도리'입니다. 울릉도와 아주 친한 이웃이랍니다.",
+                helperMessage: "울릉도 바로 옆에 자리 잡고 있는 고을이에요. '경상북도 OOO'에 속해요!",
+                aiPrompt: "독도가 '경상북도 울릉군'에 속해 있다는 주소 힌트를 귀엽게 설명해줘."
+            },
+            {
+                category: "독도의 바다",
+                question: "독도는 동해바다 한가운데에 있어요. 다음 중 독도가 있는 바다의 올바른 이름은 무엇일까요?",
+                options: [
+                    { text: "서해", correct: false },
+                    { text: "남해", correct: false },
+                    { text: "동해", correct: true },
+                    { text: "북해", correct: false }
+                ],
+                explanation: "독도는 한반도의 가장 동쪽에 있기 때문에 푸르고 깊은 '동해'바다 위에 우뚝 솟아 있답니다.",
+                helperMessage: "해가 가장 먼저 뜨는 방향은 어디일까요? 그 방향의 푸른 바다예요!",
+                aiPrompt: "해가 뜨는 동쪽 바다인 '동해'를 유추할 수 있도록 3학년 어린이 눈높이로 유쾌하게 힌트를 줘."
+            },
+            {
+                category: "독도의 날",
+                question: "독도가 대한민국의 소중한 땅임을 온 세상에 알리기 위해 지정한 '독도의 날'은 매년 몇 월 며칠일까요?",
+                options: [
+                    { text: "5월 5일", correct: false },
+                    { text: "10월 25일", correct: true },
+                    { text: "12월 25일", correct: false },
+                    { text: "3월 1일", correct: false }
+                ],
+                explanation: "1900년 10월 25일, 고종 황제가 독도를 울릉도의 부속 섬으로 공식 선포한 날을 기념하여 매년 10월 25일을 '독도의 날'로 지키고 있어요.",
+                helperMessage: "시원한 가을바람이 부는 10월의 25번째 날이에요. 숫자를 잘 기억해봐요!",
+                aiPrompt: "10월 25일 독도의 날을 맞출 수 있게 가을의 풍경과 숫자를 섞어 귀여운 힌트를 줘."
+            },
+            {
+                category: "독도의 지리지식",
+                question: "독도에서 가장 가까운 우리나라의 큰 섬은 어디일까요? 맑은 날 독도에서 이 섬이 눈으로 보인답니다!",
+                options: [
+                    { text: "제주도", correct: false },
+                    { text: "울릉도", correct: true },
+                    { text: "강화도", correct: false },
+                    { text: "거제도", correct: false }
+                ],
+                explanation: "독도와 울릉도의 거리는 약 87.4km로, 날씨가 맑은 날에는 울릉도에서 독도가 맨눈으로 아주 잘 보여요.",
+                helperMessage: "초성이 'ㅇㄹㄷ'인 섬이에요. 오징어와 호박엿으로도 엄청 유명한 이웃 섬이랍니다!",
+                aiPrompt: "울릉도가 정답이 되도록 오징어나 울릉도 이름을 유추할 수 있는 첫 자음 힌트를 줘."
+            },
+            {
+                category: "독도의 기후",
+                question: "독도의 날씨는 바다 한가운데에 있어서 매우 변화무쌍해요. 1년 중 안개가 끼거나 흐린 날이 많아서 해가 쨍쨍한 맑은 날은 며칠 정도 될까요?",
+                options: [
+                    { text: "거의 매일(300일 이상)", correct: false },
+                    { text: "약 150일 정도", correct: false },
+                    { text: "약 50일 정도로 매우 적어요", correct: true },
+                    { text: "맑은 날이 아예 없어요", correct: false }
+                ],
+                explanation: "독도는 바다 기후의 영향을 크게 받아 비나 눈이 자주 내리고 안개가 많이 껴서 맑은 날이 1년에 약 50일 내외로 무척 귀하답니다.",
+                helperMessage: "100일의 딱 절반 정도밖에 맑은 날이 없어요! 그래서 독도에 들어가는 건 날씨 요정의 도움이 필요하답니다.",
+                aiPrompt: "맑은 날이 약 50일정도로 적다는 힌트를 어린이 눈높이에서 상냥하게 설명해줘."
+            },
+            {
+                category: "독도의 역사인물",
+                question: "조선시대에 일본 어부들이 울릉도와 독도에 몰래 들어오는 것을 꾸짖고, 일본까지 직접 건너가 독도가 조선의 영토임을 문서로 확실히 약속받고 돌아온 이 용감한 어부(안용복)는 누구일까요?",
+                options: [
+                    { text: "안용복", correct: true },
+                    { text: "김구", correct: false },
+                    { text: "장보고", correct: false },
+                    { text: "정약용", correct: false }
+                ],
+                explanation: "조선 숙종 때 어부 안용복은 일본 울릉도 도해를 금지하는 문서를 받아내는 등 민간 외교관으로서 독도를 지키는 데 엄청난 일을 해냈습니다.",
+                helperMessage: "성씨는 '안' 씨이고, 이름은 '용복'이에요! 용감하고 복이 많은 분이랍니다.",
+                aiPrompt: "안용복에 대해 어린이에게 힌트를 전해줘. 안용복이라는 이름을 유머러스하게 암시해줘."
+            },
+            {
+                category: "독도의 자연환경",
+                question: "독도의 나이는 얼마나 될까요? 울릉도나 제주도보다 훨씬 먼저 만들어진 엄청 오래된 화산 섬이에요!",
+                options: [
+                    { text: "약 100년 전", correct: false },
+                    { text: "약 460만 년 전", correct: true },
+                    { text: "약 10만 년 전", correct: false },
+                    { text: "어제 태어났어요", correct: false }
+                ],
+                explanation: "독도는 해저 약 2,000m에서 솟구친 용암이 굳어 만들어진 화산섬으로, 그 나이는 약 460만 년 전으로 추정되어 제주도보다 나이가 훨씬 많아요.",
+                helperMessage: "우리가 세기 힘들 정도로 엄청난 수백만 년 전의 나이를 갖고 있어요. '4'와 '6'이 들어간 백만 단위의 아주아주 할아버지 섬이랍니다.",
+                aiPrompt: "460만 년이라는 엄청난 시간적 의미를 3학년이 이해하기 쉽게 비유를 들어 힌트를 전해줘."
+            },
+            {
+                category: "독도의 천연기념물",
+                question: "독도라는 귀한 섬 자체가 훼손되지 않도록 대한민국에서는 독도를 '이것'으로 지정해서 통째로 보호하고 있어요. 국가가 특별히 보호하는 구역인 이것은 무엇일까요?",
+                options: [
+                    { text: "천연기념물 (천연보호구역)", correct: true },
+                    { text: "놀이공원", correct: false },
+                    { text: "비밀기지", correct: false },
+                    { text: "캠핑장", correct: false }
+                ],
+                explanation: "독도는 역사적 가치와 신비로운 자연환경, 다양한 생물이 가득해서 섬 전체가 '천연기념물 제336호(독도천연보호구역)'로 지정되어 있습니다.",
+                helperMessage: "하늘이 내려준 소중하고 기념할 만한 물건이라는 뜻으로, 줄여서 '천연OOO'이라고 불러요.",
+                aiPrompt: "독도가 '천연기념물'로 지정되었다는 힌트를 따뜻한 설명과 함께 어린이 눈높이에 맞게 전해줘."
+            },
+            {
+                category: "독도의 수호자",
+                question: "지금 이 순간에도 독도에 머물며 밤낮으로 독도를 든든하고 안전하게 지켜주는 멋진 분들을 무엇이라고 부를까요?",
+                options: [
+                    { text: "독도 수비대 (독도경비대)", correct: true },
+                    { text: "우주 보안관", correct: false },
+                    { text: "소방관 대원", correct: false },
+                    { text: "탐정 사무소", correct: false }
+                ],
+                explanation: "독도에는 경상북도경찰청 소속의 '독도경비대' 대원들이 상주하며 독도 주민의 안전과 영토 주권을 굳건히 수호하고 있습니다.",
+                helperMessage: "독도를 경비하고 '수비'하는 멋진 경찰 아저씨들이에요!",
+                aiPrompt: "독도경비대/독도수비대에 대한 고마운 마음이 드러나는 아름다운 힌트를 3학년 눈높이로 구성해줘."
+            },
+            {
+                category: "독도의 꽃",
+                question: "봄과 여름이 되면 독도 언덕을 노랗게 물들이며 피어나는, 육지에서는 보기 힘들고 독도와 울릉도 바닷가 바위틈에서 자라는 예쁜 야생화의 이름은 무엇일까요?",
+                options: [
+                    { text: "섬괴불나무", correct: false },
+                    { text: "독도 민들레 (왕해국/섬기린초)", correct: true },
+                    { text: "장미", correct: false },
+                    { text: "튤립", correct: false }
+                ],
+                explanation: "독도에는 척박한 땅에서도 잘 자라는 '섬기린초', '왕해국', '해국' 등 독도만의 예쁜 식물과 꽃들이 살아가고 있어요.",
+                helperMessage: "목이 아주 길고 무늬가 멋진 동물인 '기린'의 이름을 쏙 빼닮은 꽃이 살아요. '섬기린초'나 '왕해국' 같은 바다 꽃을 생각해보세요!",
+                aiPrompt: "독도의 섬기린초나 왕해국 등 독도 야생화에 대해 3학년에 어울리는 싱그러운 힌트를 써줘."
+            },
+            {
+                category: "독도의 자원",
+                question: "독도 주변 바다 깊은 곳에는 불을 붙이면 타오르는 신비한 얼음이자, 미래의 아주 깨끗하고 엄청난 청정에너지 자원이 묻혀 있어요. 이 자원의 이름은 무엇일까요?",
+                options: [
+                    { text: "메탄하이드레이트 (가스하이드레이트)", correct: true },
+                    { text: "얼음 빙수", correct: false },
+                    { text: "바다 미역", correct: false },
+                    { text: "진흙", correct: false }
+                ],
+                explanation: "독도 주변 해저에는 천연가스가 얼음 형태로 굳어진 '메탄하이드레이트'가 아주 엄청난 양으로 매장되어 있어 자원의 보물창고로 불려요.",
+                helperMessage: "매우 어려운 과학 단어예요! 초성은 'ㅁㅌㅎㅇㄷㄹㅇㅌ' 이며, 불타는 얼음이라고 불린답니다.",
+                aiPrompt: "메탄하이드레이트(가스하이드레이트)라는 어려운 단어를 맞출 수 있게 첫 자음이나 쉽게 기억할 힌트를 줘."
+            },
+            {
+                category: "독도의 지리지식",
+                question: "독도를 가만히 위에서 내려다보면 바다 한가운데 우뚝 서 있는 멋진 돌기둥이나 바위들이 많아요. 다음 중 독도의 명물인 바위의 이름이 아닌 것은 무엇일까요?",
+                options: [
+                    { text: "한반도 바위", correct: false },
+                    { text: "촛대 바위", correct: false },
+                    { text: "에펠탑 바위", correct: true },
+                    { text: "독립문 바위", correct: false }
+                ],
+                explanation: "독도에는 모양에 따라 '한반도 바위', '코끼리 바위', '촛대 바위', '독립문 바위' 등이 있어요. 에펠탑 바위는 프랑스에나 있을 법한 상상 속 바위예요.",
+                helperMessage: "프랑스 파리에 서 있는 엄청 높은 탑 모양 바위는 독도에 존재하지 않아요!",
+                aiPrompt: "에펠탑 바위가 정답(독도에 없는 바위)임을 유추할 수 있도록 파리의 에펠탑 이야기를 섞어 힌트를 구성해줘."
+            },
+            {
+                category: "독도의 주권",
+                question: "독도는 대한민국의 소중한 영토입니다. 그렇다면 우리가 독도에 가기 위해서 여권이나 비자가 필요할까요?",
+                options: [
+                    { text: "우리 나라 땅이므로 여권은 전혀 필요 없어요", correct: true },
+                    { text: "여권이 꼭 있어야 해요", correct: false },
+                    { text: "비자가 있어야만 해요", correct: false },
+                    { text: "아무도 갈 수 없어요", correct: false }
+                ],
+                explanation: "독도는 확실한 대한민국 영토이기 때문에, 우리 국민이 갈 때는 다른 나라에 갈 때처럼 여권이나 비자가 필요하지 않으며 배표만 사서 언제든 갈 수 있습니다.",
+                helperMessage: "우리 안방이나 거실에 갈 때 주민등록증 검사를 하지 않는 것처럼, 우리 땅 독도에 갈 때도 그런 건 전혀 필요 없어요!",
+                aiPrompt: "독도가 대한민국 땅이라 여권이 필요 없다는 것을 설명하는 따뜻한 비유가 섞인 힌트를 써줘."
+            },
+            {
+                category: "독도의 주소",
+                question: "독도의 우편번호는 얼마일까요? 독도 주민이나 경비대에게 편지를 보낼 때 쓸 수 있는 독도의 우편번호를 맞혀보세요!",
+                options: [
+                    { text: "40240", correct: true },
+                    { text: "12345", correct: false },
+                    { text: "99999", correct: false },
+                    { text: "00001", correct: false }
+                ],
+                explanation: "대한민국 우정사업본부에서 지정한 독도의 공식 우편번호는 '40240'입니다. 이 번호로 편지를 보내면 독도에 직접 배달이 된답니다.",
+                helperMessage: "앞뒤 숫자가 똑같아요! '사-공-이-사-공' 순서로 소리 내어 읽어보세요.",
+                aiPrompt: "독도 우편번호 40240을 맞출 수 있게 '사공이사공' 리듬을 활용해서 아이가 기억할 수 있는 힌트를 제공해줘."
+            },
+            {
+                category: "독도의 옛 이름",
+                question: "옛날 조선시대 돌로 이루어진 독도를 보고 주민들이 돌의 사투리인 '독'을 써서 부르던 데서 유래한, 독도의 옛 한자 이름은 무엇이었을까요?",
+                options: [
+                    { text: "석도 (돌섬)", correct: true },
+                    { text: "화도 (꽃섬)", correct: false },
+                    { text: "풍도 (바람섬)", correct: false },
+                    { text: "송도 (소나무섬)", correct: false }
+                ],
+                explanation: "독도의 옛 이름 중 하나인 '석도(石島)'는 돌섬이라는 뜻으로, 고종 황제의 칙령에 등장하는 유서 깊은 한자 이름입니다.",
+                helperMessage: "한자로 '돌 석(石)' 자에 '섬 도(島)' 자를 써서 부르던 섬이랍니다.",
+                aiPrompt: "석도(돌섬)라는 이름을 맞출 수 있도록 돌 석(石) 한자를 인용해서 초등학생용 힌트를 준비해줘."
+            },
+            {
+                category: "독도의 영웅",
+                question: "6.25 전쟁 직후 정식 군인이 없어서 독도가 위태로웠을 때, 울릉도 청년들이 자발적으로 결성하여 무기와 보급품을 모아 독도를 굳건히 지켜냈던 멋진 시민 영웅 의병대의 이름은 무엇일까요?",
+                options: [
+                    { text: "독도 의용수비대", correct: true },
+                    { text: "어린이 탐험단", correct: false },
+                    { text: "우주 독수리 삼형제", correct: false },
+                    { text: "골목 대장단", correct: false }
+                ],
+                explanation: "홍순칠 대장을 비롯한 울릉도 청년들로 구성된 '독도 의용수비대'는 자비로 무기를 갖춰 독도를 지키며 대한민국 영토 주권을 확립하는 큰 공을 세웠습니다.",
+                helperMessage: "의로운 마음을 가지고 용감하게 우리 땅을 수비했던 대원들이에요. '독도 의용OOO'랍니다.",
+                aiPrompt: "독도 의용수비대에 관한 힌트를 아이들이 이해하기 쉬운 정의로운 단어로 알려줘."
+            },
+            {
+                category: "독도의 자연경관",
+                question: "독도 주변에 있는 신비한 바위 중, 마치 우리나라 전체 지도 모양을 쏙 빼닮아 큰 울림을 주는 신기한 바위의 이름은 무엇일까요?",
+                options: [
+                    { text: "한반도 바위", correct: true },
+                    { text: "하트 바위", correct: false },
+                    { text: "별 모양 바위", correct: false },
+                    { text: "공룡 알 바위", correct: false }
+                ],
+                explanation: "동도 벽면에 있는 '한반도 바위'는 보는 각도에 따라 우리나라 한반도 지도 모양을 그대로 닮아 관광객들에게 아주 인기가 많습니다.",
+                helperMessage: "우리가 살고 있는 대한민국 땅 모양을 세 글자로 부르는 이름이에요. '한OO' 바위랍니다!",
+                aiPrompt: "한반도 바위라는 답이 나오도록 우리나라 지도를 부르는 '한반도' 단어에 대한 쉬운 힌트를 줘."
+            },
+            {
+                category: "독도의 지리정보",
+                question: "독도는 대한민국의 가장 동쪽에 있는 영토입니다. 그렇다면 대한민국 전체에서 매일 아침 '가장 먼저 해가 뜨는 곳'은 어디일까요?",
+                options: [
+                    { text: "서울 남산", correct: false },
+                    { text: "독도", correct: true },
+                    { text: "제주도 한라산", correct: false },
+                    { text: "부산 해운대", correct: false }
+                ],
+                explanation: "독도는 대한민국 영토 중 가장 동쪽에 있기 때문에, 매일 아침 우리나라에서 해가 가장 먼저 뜨고 가장 먼저 아침이 찾아오는 소중한 곳입니다.",
+                helperMessage: "우리가 지금 열심히 공부하고 있는 바로 '이 섬'이 정답이에요! 우리나라의 시작을 여는 섬이랍니다.",
+                aiPrompt: "독도가 해가 가장 먼저 뜨는 곳임을 맞힐 수 있도록, '가장 동쪽 주인공'이라는 느낌의 힌트를 제공해줘."
+            },
+            {
+                category: "독도의 주민",
+                question: "독도에 실제로 거주하며 주소지를 등록하고, 독도 사랑을 몸소 보여준 최초의 독도 주민(주민등록 전입자) 부부의 남편분 성함은 무엇일까요?",
+                options: [
+                    { text: "최종덕", correct: true },
+                    { text: "세종대왕", correct: false },
+                    { text: "신사임당", correct: false },
+                    { text: "방정환", correct: false }
+                ],
+                explanation: "1965년부터 독도에 거주하며 수중 잠수와 식수 발굴에 힘쓴 고(故) 최종덕 님은 독도의 최초 민간인 거주자로 역사에 기록되어 있습니다.",
+                helperMessage: "마지막을 뜻하는 '최종'에 덕을 베푼다는 뜻의 '덕'이 합쳐진 멋진 이름이에요!",
+                aiPrompt: "최종덕 님에 대한 힌트를 3학년 눈높이로 유쾌하게 제공해줘."
+            },
+            {
+                category: "독도의 시설물",
+                question: "어두운 밤바다를 지나는 배들이 독도 바위에 부딪혀 사고가 나지 않도록, 밤마다 아주 밝은 인공 불빛을 멀리멀리 비춰주는 독도의 고마운 탑 시설물은 무엇일까요?",
+                options: [
+                    { text: "독도 등대 (항로표지관리소)", correct: true },
+                    { text: "라디오 방송국 안테나", correct: false },
+                    { text: "태양광 발전 패널", correct: false },
+                    { text: "풍력 바람개비", correct: false }
+                ],
+                explanation: "독도 동도 정상 부근에는 1954년부터 어둠 속 동해바다를 지키는 '독도 등대'가 있어 뱃길을 안전하게 지켜주고 있습니다.",
+                helperMessage: "밤바다의 길잡이가 되어 머리에 반짝 불빛을 켜고 있는 우뚝 솟은 탑 시설이에요!",
+                aiPrompt: "독도 등대에 관해 등대 불빛의 친근한 역할과 함께 아이가 맞힐 수 있도록 힌트를 줘."
+            },
+            {
+                category: "독도의 수중생태",
+                question: "독도 바닷속은 깨끗하고 영양이 풍부해서 수많은 해양 생물의 천국이에요. 다음 중 독도 바닷바위에 다닥다닥 붙어 자라는 초록색 건강한 바다 식물은 무엇일까요?",
+                options: [
+                    { text: "미역과 다시마", correct: true },
+                    { text: "배추와 상추", correct: false },
+                    { text: "소나무와 장미", correct: false },
+                    { text: "선인장과 알로에", correct: false }
+                ],
+                explanation: "독도 연안 바닷속에는 미역, 감태, 대황 등 영양이 가득한 바다 식물 해조류가 풍성하게 숲을 이뤄 물고기들의 집이 되어 줍니다.",
+                helperMessage: "우리가 생일날 맛있는 국을 끓여 먹는 재료와 너구리 라면에 들어가는 아주 네모난 다시 자원을 생각해보세요!",
+                aiPrompt: "미역과 다시마에 관한 재미있는 라면, 미역국 비유를 통해 3학년 맞춤형 힌트를 제공해줘."
+            },
+            {
+                category: "독도의 천연가치",
+                question: "독도는 화산이 터지면서 생긴 독특한 지형과 귀한 지질학적 학술 가치 덕분에 섬 전체가 지구 과학자들의 보물창고로 불려요. 이런 화산 지형의 특징으로 알맞지 않은 것은 무엇일까요?",
+                options: [
+                    { text: "세계에서 가장 큰 활화산이 매일 터지고 있다", correct: true },
+                    { text: "화산 폭발로 만들어진 다양한 암석이 가득하다", correct: false },
+                    { text: "바다 밑바닥에서 솟구쳐 생긴 신기한 화산체 구조다", correct: false },
+                    { text: "파도에 깎인 멋진 동굴과 암석 지형이 있다", correct: false }
+                ],
+                explanation: "독도는 아주 오래전에 폭발해 꺼진 죽은 화산섬(사화산)으로, 지금은 불을 뿜는 활화산이 아닙니다. 안전하니 걱정 마세요!",
+                helperMessage: "독도는 불을 뿜는 화산 활동을 멈춘 지 아주 오래되었어요. 지금 마그마가 펑펑 솟아오르면 위험하겠죠?",
+                aiPrompt: "지금은 화산이 멈춰서 안전하다는 사실을 유쾌하게 가르쳐주는 3학년용 힌트를 작성해줘."
+            },
+            {
+                category: "독도의 옛 역사",
+                question: "조선시대 백성들이 독도를 돌섬이라고 부를 때 쓰던 사투리 발음인 '독섬'이 표준어로 굳어지면서 오늘날의 이 이름이 되었어요. 이 아름다운 우리 영토의 공식 이름은 무엇일까요?",
+                options: [
+                    { text: "독도", correct: true },
+                    { text: "울릉도", correct: false },
+                    { text: "제주도", correct: false },
+                    { text: "독도랜드", correct: false }
+                ],
+                explanation: "전라도와 남해안 지방 사투리로 돌을 '독'이라고 부르던 것에서 유래해 '돌섬 -> 독섬 -> 독도'라는 예쁜 한글식 한자 주소명이 만들어졌습니다.",
+                helperMessage: "우리가 아끼고 공부하는 게임의 가장 주인공인 섬의 이름이 정답이에요!",
+                aiPrompt: "독도라는 정답을 맞출 수 있도록 게임의 주체이자 마스코트인 독도 이름을 사랑스럽게 알려줘."
+            },
+            {
+                category: "독도의 자연환경",
+                question: "독도는 아주 오랜 세월 동안 바람과 거센 바도에 부딪치고 깎이면서 생겨났어요. 이렇게 파도에 깎여 바위 밑바닥에 신기한 구멍이 숭숭 난 터널 같은 모양의 아름다운 독도의 문 바위는 무엇일까요?",
+                options: [
+                    { text: "독립문 바위", correct: true },
+                    { text: "개구멍 바위", correct: false },
+                    { text: "하늘문 바위", correct: false },
+                    { text: "냉장고 바위", correct: false }
+                ],
+                explanation: "독도 서도 북쪽에 있는 '독립문 바위'는 파도의 침식 작용으로 가운데가 뻥 뚫려 마치 서울에 있는 서대문구의 독립문 모양을 닮았답니다.",
+                helperMessage: "우리나라가 다른 나라의 간섭을 받지 않고 일어서는 뜻을 담은 서울의 '독립문'을 쏙 닮은 바위예요.",
+                aiPrompt: "독립문 바위를 맞출 수 있도록 우리나라의 자주독립 의지를 담은 문인 '독립문'의 힌트를 제공해줘."
+            },
+            {
+                category: "독도의 한반도 선포",
+                question: "고종 황제는 1900년 10월 25일에 국가 공식 법률인 '대한제국 칙령 제41호'를 발표하여 독도가 우리 영토임을 전 세계에 확실히 알렸어요. 이 일을 주도한 나라는 어디였을까요?",
+                options: [
+                    { text: "대한제국 (대한민국)", correct: true },
+                    { text: "조선왕조 (초기)", correct: false },
+                    { text: "고려시대", correct: false },
+                    { text: "가야연맹", correct: false }
+                ],
+                explanation: "대한제국 고종 황제는 법령 제41호를 통해 울릉도를 군으로 승격시키고 독도(석도)를 직접 다스리는 부속 영토로 공식 선언해 주권을 수호했습니다.",
+                helperMessage: "대한민국의 옛 황제국 시절 이름으로, '대한OO'이라고 불러요!",
+                aiPrompt: "대한제국이라는 정답을 초등 3학년용 역사 상식과 연계하여 아주 쉬운 언어로 힌트를 마련해줘."
+            },
+            {
+                category: "독도의 가치",
+                question: "우리가 독도를 지키고 사랑해야 하는 가장 올바른 마음가짐은 무엇일까요?",
+                options: [
+                    { text: "독도는 옛날부터 오늘날까지 역사적, 지리적으로 확실한 우리 땅이므로 소중히 가꾸어야 해요", correct: true },
+                    { text: "돈을 벌 수 있는 황금 광산이 있어서 지켜야 해요", correct: false },
+                    { text: "싸움을 좋아해서 우겨야 해요", correct: false },
+                    { text: "단순히 예쁜 놀이터라 생각해요", correct: false }
+                ],
+                explanation: "독도는 풍부한 지하자원과 자연생태적 가치뿐만 아니라, 역사적 사료와 문헌에 일관되게 기록된 영토 주권의 상징이기 때문에 아끼고 지켜내야 합니다.",
+                helperMessage: "독도가 오랜 역사 동안 한결같이 우리 영토이자 한 가족이었다는 깊은 마음을 담은 보기가 정답이에요.",
+                aiPrompt: "독도가 확실한 우리 땅이라는 역사적 자긍심을 줄 수 있는 올바르고 따뜻한 힌트를 전해줘."
+            }
+        ];
+
+        let selectedQuestions = []; // 랜덤으로 선택된 5문제의 배열
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userName = "독도사랑이";
+        let apiKey = "";
+
+        // 페이지 로드 시 라이브러리 초기화
+        window.onload = function() {
+            lucide.createIcons();
+            // 오늘 날짜 설정
+            const today = new Date();
+            document.getElementById('cert-date').innerText = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+        }
+
+        function goHome() {
+            playSoundEffect('click');
+            document.getElementById('screen-home').classList.remove('hidden');
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-result').classList.add('hidden');
+        }
+
+        function startGame() {
+            playSoundEffect('click');
+            // 이름 입력 창 띄우기
+            document.getElementById('modal-name').classList.remove('hidden');
+            document.getElementById('modal-name').classList.remove('scale-95');
+            document.getElementById('modal-name').classList.add('scale-100');
+        }
+
+        function confirmNameAndStart() {
+            playSoundEffect('click');
+            const input = document.getElementById('user-name-input').value.trim();
+            if (input) {
+                userName = input;
+            }
+            document.getElementById('cert-user-name').innerText = userName;
+            document.getElementById('modal-name').classList.add('hidden');
+            
+            // 30문제 중 랜덤으로 중복되지 않는 5문제 고르기
+            selectRandomQuestions();
+
+            // 본 게임 화면 진입
+            document.getElementById('screen-home').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('hidden');
+            
+            currentQuestionIndex = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        // 피셔-예이츠 셔플 알고리즘을 활용한 무작위 5문제 추출 함수
+        function selectRandomQuestions() {
+            // 원본 배열 복사
+            const tempArray = [...quizBank];
+            
+            // 무작위로 뒤섞기
+            for (let i = tempArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [tempArray[i], tempArray[j]] = [tempArray[j], tempArray[i]];
+            }
+            
+            // 앞에서부터 5개만 슬라이스하여 최종 출제용으로 선정
+            selectedQuestions = tempArray.slice(0, 5);
+        }
+
+        function loadQuestion() {
+            const quiz = selectedQuestions[currentQuestionIndex];
+            
+            // 상단 진행도 및 UI 갱신
+            document.getElementById('quiz-progress-text').innerText = `탐험 단계: ${currentQuestionIndex + 1} / 5`;
+            const progressPercent = ((currentQuestionIndex + 1) / 5) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progressPercent}%`;
+            document.getElementById('score-text').innerHTML = `<i data-lucide="sparkles" class="w-4 h-4 fill-current"></i> 점수: ${score}점`;
+            
+            document.getElementById('quiz-category').innerText = quiz.category;
+            document.getElementById('quiz-question').innerText = quiz.question;
+            
+            // 강치 코멘트 원위치
+            document.getElementById('helper-bubble').innerText = "어려우면 언제든 AI 힌트를 켜줘!";
+
+            // 선택지 버튼들 만들기
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            quiz.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-4 bg-white hover:bg-sky-50 border-2 border-slate-200 hover:border-sky-400 font-bold text-base md:text-lg rounded-2xl shadow-sm text-left transition-all active:scale-[0.98] flex items-center justify-between group";
+                btn.onclick = () => selectOption(opt.correct, quiz.explanation);
+                
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center font-black group-hover:bg-sky-500 group-hover:text-white transition-colors">${index + 1}</span>
+                        <span class="text-slate-700">${opt.text}</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-slate-300 group-hover:text-sky-500 group-hover:translate-x-1 transition-all"></i>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+            
+            lucide.createIcons();
+        }
+
+        function selectOption(isCorrect, explanation) {
+            if (isCorrect) {
+                playSoundEffect('correct');
+                score += 20;
+                showFeedback(true, explanation);
+            } else {
+                playSoundEffect('wrong');
+                showFeedback(false, explanation);
+            }
+        }
+
+        function showFeedback(isCorrect, explanation) {
+            const modal = document.getElementById('modal-feedback');
+            const card = document.getElementById('feedback-card');
+            const icon = document.getElementById('feedback-icon');
+            const title = document.getElementById('feedback-title');
+            const desc = document.getElementById('feedback-desc');
+            const exp = document.getElementById('feedback-explanation');
+
+            if (isCorrect) {
+                icon.innerText = "🎉";
+                title.innerText = "정답입니다! 참 잘했어요!";
+                title.className = "text-2xl font-black text-emerald-600";
+                desc.innerText = "대단해요! 아주 정확한 사실을 알고 있군요.";
+            } else {
+                icon.innerText = "😢";
+                title.innerText = "아쉬워요! 틀렸어요!";
+                title.className = "text-2xl font-black text-rose-500";
+                desc.innerText = "괜찮아요, 원래 배우면서 성장하는 거니까요!";
+            }
+
+            exp.innerText = explanation;
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                card.classList.remove('scale-95');
+                card.classList.add('scale-100');
+            }, 50);
+        }
+
+        function closeFeedbackAndNext() {
+            playSoundEffect('click');
+            document.getElementById('modal-feedback').classList.add('hidden');
+            
+            currentQuestionIndex++;
+            if (currentQuestionIndex < selectedQuestions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // AI 힌트 구현부 (Gemini API 호출 및 기본 폴백 적용)
+        async function requestAIHint() {
+            playSoundEffect('click');
+            const modal = document.getElementById('modal-hint');
+            const loader = document.getElementById('hint-loading');
+            const content = document.getElementById('hint-content');
+            
+            modal.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            content.classList.add('hidden');
+
+            const currentQuiz = selectedQuestions[currentQuestionIndex];
+
+            // 만약 사용자가 API 키를 입력했다면 진짜 실시간 AI 힌트를 불러옵니다
+            if (apiKey && apiKey.trim() !== "") {
+                try {
+                    const response = await callGeminiAPI(currentQuiz.aiPrompt);
+                    content.innerText = response;
+                    loader.classList.add('hidden');
+                    content.classList.remove('hidden');
+                } catch (err) {
+                    console.error("AI 힌트 요청 실패, 기본 힌트로 전환합니다:", err);
+                    useFallbackHint(currentQuiz.helperMessage);
+                }
+            } else {
+                // API 키가 없으면 친절하게 미리 정의해둔 기본 힌트를 보여줍니다
+                setTimeout(() => {
+                    useFallbackHint(currentQuiz.helperMessage);
+                }, 800); // 아주 약간의 딜레이를 주어 AI가 고민하는 느낌 유발
+            }
+        }
+
+        function useFallbackHint(hintText) {
+            const loader = document.getElementById('hint-loading');
+            const content = document.getElementById('hint-content');
+            
+            content.innerHTML = `💡 <strong>강치의 힌트:</strong><br>${hintText}`;
+            loader.classList.add('hidden');
+            content.classList.remove('hidden');
+        }
+
+        function closeHint() {
+            playSoundEffect('click');
+            document.getElementById('modal-hint').classList.add('hidden');
+        }
+
+        // Gemini API 연동 코드 (공식 SDK 혹은 fetch 활용)
+        async function callGeminiAPI(promptText) {
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{
+                    parts: [{ text: promptText }]
+                }],
+                systemInstruction: {
+                    parts: [{ text: "너는 대한민국 초등학교 3학년 어린이의 눈높이에 맞춰서, 독도에 관해 상냥하고 긍정적인 반말로 대답하는 마스코트 캐릭터 '강치'야. 독도의 힌트를 아이들이 흥미를 갖도록 재미있고 유머러스하게 한 문장으로 대답해줘." }]
+                }
+            };
+
+            // 기하급수적 백오프 구현 (최대 5회 재시도)
+            let retries = 5;
+            let delay = 1000;
+            
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        return result.candidates?.[0]?.content?.parts?.[0]?.text || "아하! 독도는 정말 아름다운 섬이야. 다시 한번 생각해보자!";
+                    }
+                } catch (e) {
+                    // 에러 발생시 백오프 대기
+                }
+                
+                await new Promise(resolve => setTimeout(resolve, delay));
+                delay *= 2;
+            }
+            throw new Error("API call failed after max retries");
+        }
+
+        // 결과창 노출
+        function showResult() {
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-result').classList.remove('hidden');
+            
+            document.getElementById('final-score').innerText = score;
+            
+            // 만점일 경우 아주 기분 좋은 폭죽 사운드 연속 재생
+            if (score === 100) {
+                setTimeout(() => playSoundEffect('correct'), 100);
+                setTimeout(() => playSoundEffect('correct'), 400);
+            }
+        }
+
+        function restartGame() {
+            playSoundEffect('click');
+            document.getElementById('screen-result').classList.add('hidden');
+            document.getElementById('screen-home').classList.remove('hidden');
+        }
+
+        // 임명장 클립보드 복사 기능
+        function shareCertificate() {
+            playSoundEffect('click');
+            const textToCopy = `[말랑말랑 독도 탐험대 임명장]\n\n우리 땅 독도를 사랑하는 멋진 어린이 '${userName}'님은 독도의 역사, 상징, 자연환경에 관한 모든 퀴즈 탐험을 훌륭히 완수(점수: ${score}점)하여 '독도 수호 대장'으로 당당히 임명되었음을 널리 선포합니다! 🇰🇷🏝️`;
+            
+            // 안전한 클립보드 복사 API 사용
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showNotification();
+            } catch (err) {
+                console.error('복사 실패:', err);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // 임시 알림 팝업 토스트 만들기
+        function showNotification() {
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs md:text-sm font-bold py-3 px-6 rounded-full shadow-lg z-50 animate-bounce";
+            toast.innerText = "🏆 임명장이 복사되었습니다! 친구들에게 자랑해보세요.";
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // 설정 모달 열기/닫기
+        function openSettings() {
+            playSoundEffect('click');
+            document.getElementById('modal-settings').classList.remove('hidden');
+            document.getElementById('api-key-input').value = apiKey;
+        }
+
+        function saveSettings() {
+            playSoundEffect('click');
+            apiKey = document.getElementById('api-key-input').value.trim();
+            document.getElementById('modal-settings').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
