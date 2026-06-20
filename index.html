@@ -100,7 +100,7 @@
                     탐험 규칙을 알아볼까요?
                 </h3>
                 <ul class="text-sm text-slate-600 space-y-2 list-disc list-inside">
-                    <li>30개의 다양한 독도 퀴즈 중 <span class="text-rose-500 font-bold">5문제</span>가 매번 랜덤으로 나와요!</li>
+                    <li>30개의 다양한 독도 퀴즈 중 <span class="text-rose-500 font-bold">10문제</span>가 매번 랜덤으로 나와요!</li>
                     <li>헷갈릴 때는 언제든 <span class="text-emerald-600 font-bold">💡 AI 돋보기 힌트</span>를 누르세요.</li>
                     <li>문제를 모두 맞히고 멋진 <span class="text-amber-500 font-bold">독도 수호 대장 임명장</span>을 완성해보세요.</li>
                 </ul>
@@ -123,7 +123,7 @@
                     </span>
                 </div>
                 <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border border-slate-200">
-                    <div id="quiz-progress-bar" class="bg-gradient-to-r from-sky-400 to-emerald-400 h-full rounded-full transition-all duration-300" style="width: 20%;"></div>
+                    <div id="quiz-progress-bar" class="bg-gradient-to-r from-sky-400 to-emerald-400 h-full rounded-full transition-all duration-300" style="width: 10%;"></div>
                 </div>
             </div>
 
@@ -889,15 +889,15 @@
             }
             
             // 앞에서부터 5개만 슬라이스하여 최종 출제용으로 선정
-            selectedQuestions = tempArray.slice(0, 5);
+            selectedQuestions = tempArray.slice(0, 10);
         }
 
         function loadQuestion() {
             const quiz = selectedQuestions[currentQuestionIndex];
             
             // 상단 진행도 및 UI 갱신
-            document.getElementById('quiz-progress-text').innerText = `탐험 단계: ${currentQuestionIndex + 1} / 5`;
-            const progressPercent = ((currentQuestionIndex + 1) / 5) * 100;
+            document.getElementById('quiz-progress-text').innerText = `탐험 단계: ${currentQuestionIndex + 1} / 10`;
+            const progressPercent = ((currentQuestionIndex + 1) / 10) * 100;
             document.getElementById('quiz-progress-bar').style.width = `${progressPercent}%`;
             document.getElementById('score-text').innerHTML = `<i data-lucide="sparkles" class="w-4 h-4 fill-current"></i> 점수: ${score}점`;
             
@@ -932,7 +932,7 @@
         function selectOption(isCorrect, explanation) {
             if (isCorrect) {
                 playSoundEffect('correct');
-                score += 20;
+                score += 10;
                 showFeedback(true, explanation);
             } else {
                 playSoundEffect('wrong');
