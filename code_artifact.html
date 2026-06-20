@@ -436,394 +436,394 @@
         // 초등학교 3학년 눈높이에 맞춘 독도 퀴즈 은행 데이터 (총 30문제)
         const quizBank = [
             {
-                category: "독도의 이름",
-                question: "독도는 크게 두 개의 엄청 커다란 섬과 그 주변의 89개 작은 돌섬들로 이루어져 있어요. 이 커다란 쌍둥이 섬 두 개의 멋진 이름은 무엇일까요?",
+                category: "독도의 지형 기본",
+                question: "독도를 이루는 가장 큰 두 섬의 이름은 무엇일까요?",
                 options: [
-                    { text: "큰도와 작은도", correct: false },
                     { text: "동도와 서도", correct: true },
                     { text: "남도와 북도", correct: false },
-                    { text: "바다도와 하늘도", correct: false }
+                    { text: "큰섬과 작은섬", correct: false },
+                    { text: "해도와 산도", correct: false }
                 ],
-                explanation: "독도에서 가장 크고 대표적인 두 섬은 동쪽에 있는 '동도'와 서쪽에 있는 '서도'예요!",
-                helperMessage: "해 뜨는 동쪽과 해 지는 서쪽의 방향 이름을 잘 생각해보세요! '동쪽 섬, 서쪽 섬'이란 뜻이랍니다.",
-                aiPrompt: "어린이가 독도가 동도와 서도로 이뤄져 있다는 걸 맞혀야 해. 어린이 눈높이에 맞는 귀엽고 따뜻한 힌트를 제공해줘."
+                explanation: "독도의 핵심 지형은 동쪽의 동도와 서쪽의 서도, 두 큰 섬으로 이루어져 있어요.",
+                helperMessage: "해 뜨는 쪽(동)과 해 지는 쪽(서) 방향 이름을 떠올려 보세요.",
+                aiPrompt: "동도와 서도가 정답이 되도록 초등학생 눈높이의 쉬운 지형 힌트를 줘."
             },
             {
-                category: "독도의 상징",
-                question: "옛날 독도에는 바다사자의 친구이자 수영을 아주 잘하던 이 동물이 수만 마리나 살고 있었어요. 사람들의 사냥 때문에 지금은 사라진 이 귀여운 동물의 이름은 무엇일까요?",
+                category: "독도의 지형 규모",
+                question: "독도는 동도와 서도 외에도 어떤 지형 요소를 많이 가지고 있을까요?",
                 options: [
-                    { text: "강치", correct: true },
-                    { text: "북극곰", correct: false },
-                    { text: "돌고래", correct: false },
-                    { text: "펭귄", correct: false }
+                    { text: "작은 바위섬(부속도서)", correct: true },
+                    { text: "넓은 모래사막", correct: false },
+                    { text: "긴 강과 호수", correct: false },
+                    { text: "거대한 빙하", correct: false }
                 ],
-                explanation: "귀여운 동해의 바다사자 '강치'는 일제강점기 때 무분별한 가죽 사냥을 당해 지금은 멸종되어 사라졌답니다. 우리가 꼭 기억해줘야 해요.",
-                helperMessage: "이 동물 이름의 첫 글자는 '강'이에요! 귀여운 바다사자의 이름은 무엇일까요?",
-                aiPrompt: "독도 강치에 대한 힌트를 주려고 해. 강치라는 정답을 유추할 수 있도록 사랑스럽게 힌트를 제공해줘."
+                explanation: "독도는 큰 섬 2개와 함께 많은 작은 바위섬(암초성 부속도서)으로 이루어져 있어요.",
+                helperMessage: "독도 사진을 보면 큰 섬 주변에 작은 돌섬들이 많이 보여요.",
+                aiPrompt: "독도 주변의 작은 바위섬이 정답임을 알 수 있게 힌트를 써줘."
             },
             {
-                category: "독도의 역사",
-                question: "신라시대에 '이 장군님'이 나무 사자를 앞세워 독도가 속했던 옛 섬나라(우산국)를 대한민국 영토로 만들었어요. 이 멋진 장군님의 이름은 누구일까요?",
+                category: "독도의 생성",
+                question: "독도는 어떤 과정으로 만들어진 섬일까요?",
                 options: [
-                    { text: "이순신 장군", correct: false },
-                    { text: "이사부 장군", correct: true },
-                    { text: "을지문덕 장군", correct: false },
-                    { text: "김유신 장군", correct: false }
+                    { text: "화산 활동으로 만들어진 화산섬", correct: true },
+                    { text: "강물이 흙을 쌓아 만든 섬", correct: false },
+                    { text: "빙하가 밀어 올린 섬", correct: false },
+                    { text: "사람이 흙을 메워 만든 섬", correct: false }
                 ],
-                explanation: "신라 지증왕 때 이사부 장군이 울릉도와 독도가 있던 '우산국'을 정벌하여 이때부터 울릉도와 독도가 우리 역사에 공식적으로 들어오게 되었습니다.",
-                helperMessage: "이름이 '이O부' 장군님이에요. 이 씨 성을 가진 멋진 장군님입니다!",
-                aiPrompt: "이사부 장군에 관한 힌트를 준비해줘. 힌트에 이O부 글자를 조합할 수 있도록 도와줘."
+                explanation: "독도는 바닷속 화산 활동으로 만들어진 화산섬이에요.",
+                helperMessage: "용암, 화산, 바위 같은 단어를 떠올려 보세요.",
+                aiPrompt: "독도가 화산섬이라는 핵심을 초등학생용 힌트로 설명해줘."
             },
             {
-                category: "독도의 자연생물",
-                question: "독도의 밤하늘을 나는 귀여운 바다새로, 괭이(고양이) 울음소리와 비슷한 소리를 낸다고 해서 이름 붙여진 독도의 마스코트 새는 무엇일까요?",
+                category: "독도의 기반 지형",
+                question: "독도는 바다 위로 보이는 부분만 있을까요, 아니면 바닷속에도 이어진 큰 지형이 있을까요?",
                 options: [
-                    { text: "독수리", correct: false },
-                    { text: "참새", correct: false },
-                    { text: "괭이갈매기", correct: true },
-                    { text: "비둘기", correct: false }
+                    { text: "바닷속에도 이어진 해저산 지형이 있다", correct: true },
+                    { text: "바닷속에는 아무 지형이 없다", correct: false },
+                    { text: "바닷속은 전부 모래평야다", correct: false },
+                    { text: "바닷속은 거대한 논밭이다", correct: false }
                 ],
-                explanation: "울음소리가 '야옹 야옹' 고양이 소리와 비슷해서 '괭이(고양이의 방언)갈매기'라고 불리는 새예요. 독도에 많이 살아요.",
-                helperMessage: "고양이를 뜻하는 '괭이'가 앞에 붙는 갈매기예요. 고양이 울음소리를 내는 신기한 새랍니다!",
-                aiPrompt: "괭이갈매기에 대해 초등용 힌트를 준비해줘. 야옹하는 고양이 울음소리가 난다는 점을 강조해줘."
+                explanation: "독도는 바다 위의 섬만이 아니라 바닷속 해저산의 윗부분이 드러난 지형이에요.",
+                helperMessage: "물 위에 보이는 건 산의 꼭대기라고 생각해 보세요.",
+                aiPrompt: "해저산 꼭대기가 섬으로 보인다는 점을 힌트로 알려줘."
             },
             {
-                category: "독도의 지리",
-                question: "우리의 소중한 땅 독도는 대한민국의 행정구역 중 어디에 속해 있을까요?",
+                category: "독도의 암석",
+                question: "독도처럼 화산 활동으로 생긴 섬에서 흔히 볼 수 있는 암석은 무엇일까요?",
                 options: [
-                    { text: "제주특별자치도", correct: false },
-                    { text: "경상북도 울릉군", correct: true },
-                    { text: "전라남도 여수시", correct: false },
-                    { text: "경기도 수원시", correct: false }
+                    { text: "화산암", correct: true },
+                    { text: "석탄", correct: false },
+                    { text: "소금암", correct: false },
+                    { text: "종이암", correct: false }
                 ],
-                explanation: "독도의 실제 주소는 '경상북도 울릉군 울릉읍 독도리'입니다. 울릉도와 아주 친한 이웃이랍니다.",
-                helperMessage: "울릉도 바로 옆에 자리 잡고 있는 고을이에요. '경상북도 OOO'에 속해요!",
-                aiPrompt: "독도가 '경상북도 울릉군'에 속해 있다는 주소 힌트를 귀엽게 설명해줘."
+                explanation: "화산섬인 독도에는 화산 활동과 관련된 다양한 화산암이 분포해요.",
+                helperMessage: "화산이 식으면 어떤 돌이 만들어질지 생각해 보세요.",
+                aiPrompt: "화산암이 정답임을 자연스럽게 유도하는 쉬운 힌트를 작성해줘."
             },
             {
-                category: "독도의 바다",
-                question: "독도는 동해바다 한가운데에 있어요. 다음 중 독도가 있는 바다의 올바른 이름은 무엇일까요?",
+                category: "독도의 해안 지형",
+                question: "독도 해안에서 많이 볼 수 있는 모습은 무엇일까요?",
                 options: [
-                    { text: "서해", correct: false },
-                    { text: "남해", correct: false },
-                    { text: "동해", correct: true },
-                    { text: "북해", correct: false }
+                    { text: "가파른 바위 절벽", correct: true },
+                    { text: "끝없는 백사장", correct: false },
+                    { text: "넓은 논밭 평야", correct: false },
+                    { text: "높은 모래언덕", correct: false }
                 ],
-                explanation: "독도는 한반도의 가장 동쪽에 있기 때문에 푸르고 깊은 '동해'바다 위에 우뚝 솟아 있답니다.",
-                helperMessage: "해가 가장 먼저 뜨는 방향은 어디일까요? 그 방향의 푸른 바다예요!",
-                aiPrompt: "해가 뜨는 동쪽 바다인 '동해'를 유추할 수 있도록 3학년 어린이 눈높이로 유쾌하게 힌트를 줘."
+                explanation: "독도는 사방이 가파른 바위 절벽이 많은 험준한 해안 지형이에요.",
+                helperMessage: "독도 사진을 보면 바닷가가 모래보다 바위가 훨씬 많아요.",
+                aiPrompt: "독도의 가파른 절벽 지형이 떠오르도록 힌트를 줘."
             },
             {
-                category: "독도의 날",
-                question: "독도가 대한민국의 소중한 땅임을 온 세상에 알리기 위해 지정한 '독도의 날'은 매년 몇 월 며칠일까요?",
+                category: "독도의 침식 지형",
+                question: "파도가 오랜 시간 바위를 깎아 만들어지는 지형은 무엇일까요?",
                 options: [
-                    { text: "5월 5일", correct: false },
-                    { text: "10월 25일", correct: true },
-                    { text: "12월 25일", correct: false },
-                    { text: "3월 1일", correct: false }
+                    { text: "해식 동굴", correct: true },
+                    { text: "빙하 계곡", correct: false },
+                    { text: "사막 오아시스", correct: false },
+                    { text: "용암 동굴(육지형)", correct: false }
                 ],
-                explanation: "1900년 10월 25일, 고종 황제가 독도를 울릉도의 부속 섬으로 공식 선포한 날을 기념하여 매년 10월 25일을 '독도의 날'로 지키고 있어요.",
-                helperMessage: "시원한 가을바람이 부는 10월의 25번째 날이에요. 숫자를 잘 기억해봐요!",
-                aiPrompt: "10월 25일 독도의 날을 맞출 수 있게 가을의 풍경과 숫자를 섞어 귀여운 힌트를 줘."
+                explanation: "독도에는 파도 침식 작용으로 만들어진 해식 동굴과 구멍 지형이 발달해 있어요.",
+                helperMessage: "바다(해) + 깎일 식(식) + 동굴, 단어를 이어 보면 답이 보여요.",
+                aiPrompt: "해식 동굴 개념을 초등학생이 이해하기 쉽게 힌트로 써줘."
             },
             {
-                category: "독도의 지리지식",
-                question: "독도에서 가장 가까운 우리나라의 큰 섬은 어디일까요? 맑은 날 독도에서 이 섬이 눈으로 보인답니다!",
-                options: [
-                    { text: "제주도", correct: false },
-                    { text: "울릉도", correct: true },
-                    { text: "강화도", correct: false },
-                    { text: "거제도", correct: false }
-                ],
-                explanation: "독도와 울릉도의 거리는 약 87.4km로, 날씨가 맑은 날에는 울릉도에서 독도가 맨눈으로 아주 잘 보여요.",
-                helperMessage: "초성이 'ㅇㄹㄷ'인 섬이에요. 오징어와 호박엿으로도 엄청 유명한 이웃 섬이랍니다!",
-                aiPrompt: "울릉도가 정답이 되도록 오징어나 울릉도 이름을 유추할 수 있는 첫 자음 힌트를 줘."
-            },
-            {
-                category: "독도의 기후",
-                question: "독도의 날씨는 바다 한가운데에 있어서 매우 변화무쌍해요. 1년 중 안개가 끼거나 흐린 날이 많아서 해가 쨍쨍한 맑은 날은 며칠 정도 될까요?",
-                options: [
-                    { text: "거의 매일(300일 이상)", correct: false },
-                    { text: "약 150일 정도", correct: false },
-                    { text: "약 50일 정도로 매우 적어요", correct: true },
-                    { text: "맑은 날이 아예 없어요", correct: false }
-                ],
-                explanation: "독도는 바다 기후의 영향을 크게 받아 비나 눈이 자주 내리고 안개가 많이 껴서 맑은 날이 1년에 약 50일 내외로 무척 귀하답니다.",
-                helperMessage: "100일의 딱 절반 정도밖에 맑은 날이 없어요! 그래서 독도에 들어가는 건 날씨 요정의 도움이 필요하답니다.",
-                aiPrompt: "맑은 날이 약 50일정도로 적다는 힌트를 어린이 눈높이에서 상냥하게 설명해줘."
-            },
-            {
-                category: "독도의 역사인물",
-                question: "조선시대에 일본 어부들이 울릉도와 독도에 몰래 들어오는 것을 꾸짖고, 일본까지 직접 건너가 독도가 조선의 영토임을 문서로 확실히 약속받고 돌아온 이 용감한 어부(안용복)는 누구일까요?",
-                options: [
-                    { text: "안용복", correct: true },
-                    { text: "김구", correct: false },
-                    { text: "장보고", correct: false },
-                    { text: "정약용", correct: false }
-                ],
-                explanation: "조선 숙종 때 어부 안용복은 일본 울릉도 도해를 금지하는 문서를 받아내는 등 민간 외교관으로서 독도를 지키는 데 엄청난 일을 해냈습니다.",
-                helperMessage: "성씨는 '안' 씨이고, 이름은 '용복'이에요! 용감하고 복이 많은 분이랍니다.",
-                aiPrompt: "안용복에 대해 어린이에게 힌트를 전해줘. 안용복이라는 이름을 유머러스하게 암시해줘."
-            },
-            {
-                category: "독도의 자연환경",
-                question: "독도의 나이는 얼마나 될까요? 울릉도나 제주도보다 훨씬 먼저 만들어진 엄청 오래된 화산 섬이에요!",
-                options: [
-                    { text: "약 100년 전", correct: false },
-                    { text: "약 460만 년 전", correct: true },
-                    { text: "약 10만 년 전", correct: false },
-                    { text: "어제 태어났어요", correct: false }
-                ],
-                explanation: "독도는 해저 약 2,000m에서 솟구친 용암이 굳어 만들어진 화산섬으로, 그 나이는 약 460만 년 전으로 추정되어 제주도보다 나이가 훨씬 많아요.",
-                helperMessage: "우리가 세기 힘들 정도로 엄청난 수백만 년 전의 나이를 갖고 있어요. '4'와 '6'이 들어간 백만 단위의 아주아주 할아버지 섬이랍니다.",
-                aiPrompt: "460만 년이라는 엄청난 시간적 의미를 3학년이 이해하기 쉽게 비유를 들어 힌트를 전해줘."
-            },
-            {
-                category: "독도의 천연기념물",
-                question: "독도라는 귀한 섬 자체가 훼손되지 않도록 대한민국에서는 독도를 '이것'으로 지정해서 통째로 보호하고 있어요. 국가가 특별히 보호하는 구역인 이것은 무엇일까요?",
-                options: [
-                    { text: "천연기념물 (천연보호구역)", correct: true },
-                    { text: "놀이공원", correct: false },
-                    { text: "비밀기지", correct: false },
-                    { text: "캠핑장", correct: false }
-                ],
-                explanation: "독도는 역사적 가치와 신비로운 자연환경, 다양한 생물이 가득해서 섬 전체가 '천연기념물 제336호(독도천연보호구역)'로 지정되어 있습니다.",
-                helperMessage: "하늘이 내려준 소중하고 기념할 만한 물건이라는 뜻으로, 줄여서 '천연OOO'이라고 불러요.",
-                aiPrompt: "독도가 '천연기념물'로 지정되었다는 힌트를 따뜻한 설명과 함께 어린이 눈높이에 맞게 전해줘."
-            },
-            {
-                category: "독도의 수호자",
-                question: "지금 이 순간에도 독도에 머물며 밤낮으로 독도를 든든하고 안전하게 지켜주는 멋진 분들을 무엇이라고 부를까요?",
-                options: [
-                    { text: "독도 수비대 (독도경비대)", correct: true },
-                    { text: "우주 보안관", correct: false },
-                    { text: "소방관 대원", correct: false },
-                    { text: "탐정 사무소", correct: false }
-                ],
-                explanation: "독도에는 경상북도경찰청 소속의 '독도경비대' 대원들이 상주하며 독도 주민의 안전과 영토 주권을 굳건히 수호하고 있습니다.",
-                helperMessage: "독도를 경비하고 '수비'하는 멋진 경찰 아저씨들이에요!",
-                aiPrompt: "독도경비대/독도수비대에 대한 고마운 마음이 드러나는 아름다운 힌트를 3학년 눈높이로 구성해줘."
-            },
-            {
-                category: "독도의 꽃",
-                question: "봄과 여름이 되면 독도 언덕을 노랗게 물들이며 피어나는, 육지에서는 보기 힘들고 독도와 울릉도 바닷가 바위틈에서 자라는 예쁜 야생화의 이름은 무엇일까요?",
-                options: [
-                    { text: "섬괴불나무", correct: false },
-                    { text: "독도 민들레 (왕해국/섬기린초)", correct: true },
-                    { text: "장미", correct: false },
-                    { text: "튤립", correct: false }
-                ],
-                explanation: "독도에는 척박한 땅에서도 잘 자라는 '섬기린초', '왕해국', '해국' 등 독도만의 예쁜 식물과 꽃들이 살아가고 있어요.",
-                helperMessage: "목이 아주 길고 무늬가 멋진 동물인 '기린'의 이름을 쏙 빼닮은 꽃이 살아요. '섬기린초'나 '왕해국' 같은 바다 꽃을 생각해보세요!",
-                aiPrompt: "독도의 섬기린초나 왕해국 등 독도 야생화에 대해 3학년에 어울리는 싱그러운 힌트를 써줘."
-            },
-            {
-                category: "독도의 자원",
-                question: "독도 주변 바다 깊은 곳에는 불을 붙이면 타오르는 신비한 얼음이자, 미래의 아주 깨끗하고 엄청난 청정에너지 자원이 묻혀 있어요. 이 자원의 이름은 무엇일까요?",
-                options: [
-                    { text: "메탄하이드레이트 (가스하이드레이트)", correct: true },
-                    { text: "얼음 빙수", correct: false },
-                    { text: "바다 미역", correct: false },
-                    { text: "진흙", correct: false }
-                ],
-                explanation: "독도 주변 해저에는 천연가스가 얼음 형태로 굳어진 '메탄하이드레이트'가 아주 엄청난 양으로 매장되어 있어 자원의 보물창고로 불려요.",
-                helperMessage: "매우 어려운 과학 단어예요! 초성은 'ㅁㅌㅎㅇㄷㄹㅇㅌ' 이며, 불타는 얼음이라고 불린답니다.",
-                aiPrompt: "메탄하이드레이트(가스하이드레이트)라는 어려운 단어를 맞출 수 있게 첫 자음이나 쉽게 기억할 힌트를 줘."
-            },
-            {
-                category: "독도의 지리지식",
-                question: "독도를 가만히 위에서 내려다보면 바다 한가운데 우뚝 서 있는 멋진 돌기둥이나 바위들이 많아요. 다음 중 독도의 명물인 바위의 이름이 아닌 것은 무엇일까요?",
-                options: [
-                    { text: "한반도 바위", correct: false },
-                    { text: "촛대 바위", correct: false },
-                    { text: "에펠탑 바위", correct: true },
-                    { text: "독립문 바위", correct: false }
-                ],
-                explanation: "독도에는 모양에 따라 '한반도 바위', '코끼리 바위', '촛대 바위', '독립문 바위' 등이 있어요. 에펠탑 바위는 프랑스에나 있을 법한 상상 속 바위예요.",
-                helperMessage: "프랑스 파리에 서 있는 엄청 높은 탑 모양 바위는 독도에 존재하지 않아요!",
-                aiPrompt: "에펠탑 바위가 정답(독도에 없는 바위)임을 유추할 수 있도록 파리의 에펠탑 이야기를 섞어 힌트를 구성해줘."
-            },
-            {
-                category: "독도의 주권",
-                question: "독도는 대한민국의 소중한 영토입니다. 그렇다면 우리가 독도에 가기 위해서 여권이나 비자가 필요할까요?",
-                options: [
-                    { text: "우리 나라 땅이므로 여권은 전혀 필요 없어요", correct: true },
-                    { text: "여권이 꼭 있어야 해요", correct: false },
-                    { text: "비자가 있어야만 해요", correct: false },
-                    { text: "아무도 갈 수 없어요", correct: false }
-                ],
-                explanation: "독도는 확실한 대한민국 영토이기 때문에, 우리 국민이 갈 때는 다른 나라에 갈 때처럼 여권이나 비자가 필요하지 않으며 배표만 사서 언제든 갈 수 있습니다.",
-                helperMessage: "우리 안방이나 거실에 갈 때 주민등록증 검사를 하지 않는 것처럼, 우리 땅 독도에 갈 때도 그런 건 전혀 필요 없어요!",
-                aiPrompt: "독도가 대한민국 땅이라 여권이 필요 없다는 것을 설명하는 따뜻한 비유가 섞인 힌트를 써줘."
-            },
-            {
-                category: "독도의 주소",
-                question: "독도의 우편번호는 얼마일까요? 독도 주민이나 경비대에게 편지를 보낼 때 쓸 수 있는 독도의 우편번호를 맞혀보세요!",
-                options: [
-                    { text: "40240", correct: true },
-                    { text: "12345", correct: false },
-                    { text: "99999", correct: false },
-                    { text: "00001", correct: false }
-                ],
-                explanation: "대한민국 우정사업본부에서 지정한 독도의 공식 우편번호는 '40240'입니다. 이 번호로 편지를 보내면 독도에 직접 배달이 된답니다.",
-                helperMessage: "앞뒤 숫자가 똑같아요! '사-공-이-사-공' 순서로 소리 내어 읽어보세요.",
-                aiPrompt: "독도 우편번호 40240을 맞출 수 있게 '사공이사공' 리듬을 활용해서 아이가 기억할 수 있는 힌트를 제공해줘."
-            },
-            {
-                category: "독도의 옛 이름",
-                question: "옛날 조선시대 돌로 이루어진 독도를 보고 주민들이 돌의 사투리인 '독'을 써서 부르던 데서 유래한, 독도의 옛 한자 이름은 무엇이었을까요?",
-                options: [
-                    { text: "석도 (돌섬)", correct: true },
-                    { text: "화도 (꽃섬)", correct: false },
-                    { text: "풍도 (바람섬)", correct: false },
-                    { text: "송도 (소나무섬)", correct: false }
-                ],
-                explanation: "독도의 옛 이름 중 하나인 '석도(石島)'는 돌섬이라는 뜻으로, 고종 황제의 칙령에 등장하는 유서 깊은 한자 이름입니다.",
-                helperMessage: "한자로 '돌 석(石)' 자에 '섬 도(島)' 자를 써서 부르던 섬이랍니다.",
-                aiPrompt: "석도(돌섬)라는 이름을 맞출 수 있도록 돌 석(石) 한자를 인용해서 초등학생용 힌트를 준비해줘."
-            },
-            {
-                category: "독도의 영웅",
-                question: "6.25 전쟁 직후 정식 군인이 없어서 독도가 위태로웠을 때, 울릉도 청년들이 자발적으로 결성하여 무기와 보급품을 모아 독도를 굳건히 지켜냈던 멋진 시민 영웅 의병대의 이름은 무엇일까요?",
-                options: [
-                    { text: "독도 의용수비대", correct: true },
-                    { text: "어린이 탐험단", correct: false },
-                    { text: "우주 독수리 삼형제", correct: false },
-                    { text: "골목 대장단", correct: false }
-                ],
-                explanation: "홍순칠 대장을 비롯한 울릉도 청년들로 구성된 '독도 의용수비대'는 자비로 무기를 갖춰 독도를 지키며 대한민국 영토 주권을 확립하는 큰 공을 세웠습니다.",
-                helperMessage: "의로운 마음을 가지고 용감하게 우리 땅을 수비했던 대원들이에요. '독도 의용OOO'랍니다.",
-                aiPrompt: "독도 의용수비대에 관한 힌트를 아이들이 이해하기 쉬운 정의로운 단어로 알려줘."
-            },
-            {
-                category: "독도의 자연경관",
-                question: "독도 주변에 있는 신비한 바위 중, 마치 우리나라 전체 지도 모양을 쏙 빼닮아 큰 울림을 주는 신기한 바위의 이름은 무엇일까요?",
-                options: [
-                    { text: "한반도 바위", correct: true },
-                    { text: "하트 바위", correct: false },
-                    { text: "별 모양 바위", correct: false },
-                    { text: "공룡 알 바위", correct: false }
-                ],
-                explanation: "동도 벽면에 있는 '한반도 바위'는 보는 각도에 따라 우리나라 한반도 지도 모양을 그대로 닮아 관광객들에게 아주 인기가 많습니다.",
-                helperMessage: "우리가 살고 있는 대한민국 땅 모양을 세 글자로 부르는 이름이에요. '한OO' 바위랍니다!",
-                aiPrompt: "한반도 바위라는 답이 나오도록 우리나라 지도를 부르는 '한반도' 단어에 대한 쉬운 힌트를 줘."
-            },
-            {
-                category: "독도의 지리정보",
-                question: "독도는 대한민국의 가장 동쪽에 있는 영토입니다. 그렇다면 대한민국 전체에서 매일 아침 '가장 먼저 해가 뜨는 곳'은 어디일까요?",
-                options: [
-                    { text: "서울 남산", correct: false },
-                    { text: "독도", correct: true },
-                    { text: "제주도 한라산", correct: false },
-                    { text: "부산 해운대", correct: false }
-                ],
-                explanation: "독도는 대한민국 영토 중 가장 동쪽에 있기 때문에, 매일 아침 우리나라에서 해가 가장 먼저 뜨고 가장 먼저 아침이 찾아오는 소중한 곳입니다.",
-                helperMessage: "우리가 지금 열심히 공부하고 있는 바로 '이 섬'이 정답이에요! 우리나라의 시작을 여는 섬이랍니다.",
-                aiPrompt: "독도가 해가 가장 먼저 뜨는 곳임을 맞힐 수 있도록, '가장 동쪽 주인공'이라는 느낌의 힌트를 제공해줘."
-            },
-            {
-                category: "독도의 주민",
-                question: "독도에 실제로 거주하며 주소지를 등록하고, 독도 사랑을 몸소 보여준 최초의 독도 주민(주민등록 전입자) 부부의 남편분 성함은 무엇일까요?",
-                options: [
-                    { text: "최종덕", correct: true },
-                    { text: "세종대왕", correct: false },
-                    { text: "신사임당", correct: false },
-                    { text: "방정환", correct: false }
-                ],
-                explanation: "1965년부터 독도에 거주하며 수중 잠수와 식수 발굴에 힘쓴 고(故) 최종덕 님은 독도의 최초 민간인 거주자로 역사에 기록되어 있습니다.",
-                helperMessage: "마지막을 뜻하는 '최종'에 덕을 베푼다는 뜻의 '덕'이 합쳐진 멋진 이름이에요!",
-                aiPrompt: "최종덕 님에 대한 힌트를 3학년 눈높이로 유쾌하게 제공해줘."
-            },
-            {
-                category: "독도의 시설물",
-                question: "어두운 밤바다를 지나는 배들이 독도 바위에 부딪혀 사고가 나지 않도록, 밤마다 아주 밝은 인공 불빛을 멀리멀리 비춰주는 독도의 고마운 탑 시설물은 무엇일까요?",
-                options: [
-                    { text: "독도 등대 (항로표지관리소)", correct: true },
-                    { text: "라디오 방송국 안테나", correct: false },
-                    { text: "태양광 발전 패널", correct: false },
-                    { text: "풍력 바람개비", correct: false }
-                ],
-                explanation: "독도 동도 정상 부근에는 1954년부터 어둠 속 동해바다를 지키는 '독도 등대'가 있어 뱃길을 안전하게 지켜주고 있습니다.",
-                helperMessage: "밤바다의 길잡이가 되어 머리에 반짝 불빛을 켜고 있는 우뚝 솟은 탑 시설이에요!",
-                aiPrompt: "독도 등대에 관해 등대 불빛의 친근한 역할과 함께 아이가 맞힐 수 있도록 힌트를 줘."
-            },
-            {
-                category: "독도의 수중생태",
-                question: "독도 바닷속은 깨끗하고 영양이 풍부해서 수많은 해양 생물의 천국이에요. 다음 중 독도 바닷바위에 다닥다닥 붙어 자라는 초록색 건강한 바다 식물은 무엇일까요?",
-                options: [
-                    { text: "미역과 다시마", correct: true },
-                    { text: "배추와 상추", correct: false },
-                    { text: "소나무와 장미", correct: false },
-                    { text: "선인장과 알로에", correct: false }
-                ],
-                explanation: "독도 연안 바닷속에는 미역, 감태, 대황 등 영양이 가득한 바다 식물 해조류가 풍성하게 숲을 이뤄 물고기들의 집이 되어 줍니다.",
-                helperMessage: "우리가 생일날 맛있는 국을 끓여 먹는 재료와 너구리 라면에 들어가는 아주 네모난 다시 자원을 생각해보세요!",
-                aiPrompt: "미역과 다시마에 관한 재미있는 라면, 미역국 비유를 통해 3학년 맞춤형 힌트를 제공해줘."
-            },
-            {
-                category: "독도의 천연가치",
-                question: "독도는 화산이 터지면서 생긴 독특한 지형과 귀한 지질학적 학술 가치 덕분에 섬 전체가 지구 과학자들의 보물창고로 불려요. 이런 화산 지형의 특징으로 알맞지 않은 것은 무엇일까요?",
-                options: [
-                    { text: "세계에서 가장 큰 활화산이 매일 터지고 있다", correct: true },
-                    { text: "화산 폭발로 만들어진 다양한 암석이 가득하다", correct: false },
-                    { text: "바다 밑바닥에서 솟구쳐 생긴 신기한 화산체 구조다", correct: false },
-                    { text: "파도에 깎인 멋진 동굴과 암석 지형이 있다", correct: false }
-                ],
-                explanation: "독도는 아주 오래전에 폭발해 꺼진 죽은 화산섬(사화산)으로, 지금은 불을 뿜는 활화산이 아닙니다. 안전하니 걱정 마세요!",
-                helperMessage: "독도는 불을 뿜는 화산 활동을 멈춘 지 아주 오래되었어요. 지금 마그마가 펑펑 솟아오르면 위험하겠죠?",
-                aiPrompt: "지금은 화산이 멈춰서 안전하다는 사실을 유쾌하게 가르쳐주는 3학년용 힌트를 작성해줘."
-            },
-            {
-                category: "독도의 옛 역사",
-                question: "조선시대 백성들이 독도를 돌섬이라고 부를 때 쓰던 사투리 발음인 '독섬'이 표준어로 굳어지면서 오늘날의 이 이름이 되었어요. 이 아름다운 우리 영토의 공식 이름은 무엇일까요?",
-                options: [
-                    { text: "독도", correct: true },
-                    { text: "울릉도", correct: false },
-                    { text: "제주도", correct: false },
-                    { text: "독도랜드", correct: false }
-                ],
-                explanation: "전라도와 남해안 지방 사투리로 돌을 '독'이라고 부르던 것에서 유래해 '돌섬 -> 독섬 -> 독도'라는 예쁜 한글식 한자 주소명이 만들어졌습니다.",
-                helperMessage: "우리가 아끼고 공부하는 게임의 가장 주인공인 섬의 이름이 정답이에요!",
-                aiPrompt: "독도라는 정답을 맞출 수 있도록 게임의 주체이자 마스코트인 독도 이름을 사랑스럽게 알려줘."
-            },
-            {
-                category: "독도의 자연환경",
-                question: "독도는 아주 오랜 세월 동안 바람과 거센 바도에 부딪치고 깎이면서 생겨났어요. 이렇게 파도에 깎여 바위 밑바닥에 신기한 구멍이 숭숭 난 터널 같은 모양의 아름다운 독도의 문 바위는 무엇일까요?",
+                category: "독도의 명소 지형",
+                question: "가운데가 뚫린 문 모양으로 유명한 독도 바위 지형은 무엇일까요?",
                 options: [
                     { text: "독립문 바위", correct: true },
-                    { text: "개구멍 바위", correct: false },
-                    { text: "하늘문 바위", correct: false },
-                    { text: "냉장고 바위", correct: false }
+                    { text: "피라미드 바위", correct: false },
+                    { text: "에펠탑 바위", correct: false },
+                    { text: "무지개 바위", correct: false }
                 ],
-                explanation: "독도 서도 북쪽에 있는 '독립문 바위'는 파도의 침식 작용으로 가운데가 뻥 뚫려 마치 서울에 있는 서대문구의 독립문 모양을 닮았답니다.",
-                helperMessage: "우리나라가 다른 나라의 간섭을 받지 않고 일어서는 뜻을 담은 서울의 '독립문'을 쏙 닮은 바위예요.",
-                aiPrompt: "독립문 바위를 맞출 수 있도록 우리나라의 자주독립 의지를 담은 문인 '독립문'의 힌트를 제공해줘."
+                explanation: "독립문 바위는 파도 침식으로 가운데가 뚫려 문처럼 보이는 독도의 대표 지형이에요.",
+                helperMessage: "서울의 유명한 문 이름과 같은 이름을 가진 바위예요.",
+                aiPrompt: "독립문 바위가 정답이 되도록 쉬운 연상 힌트를 만들어줘."
             },
             {
-                category: "독도의 한반도 선포",
-                question: "고종 황제는 1900년 10월 25일에 국가 공식 법률인 '대한제국 칙령 제41호'를 발표하여 독도가 우리 영토임을 전 세계에 확실히 알렸어요. 이 일을 주도한 나라는 어디였을까요?",
+                category: "독도의 바위 지형",
+                question: "이름처럼 촛대 모양으로 생겨 알려진 독도의 바위는 무엇일까요?",
                 options: [
-                    { text: "대한제국 (대한민국)", correct: true },
-                    { text: "조선왕조 (초기)", correct: false },
-                    { text: "고려시대", correct: false },
-                    { text: "가야연맹", correct: false }
+                    { text: "촛대바위", correct: true },
+                    { text: "연필바위", correct: false },
+                    { text: "공책바위", correct: false },
+                    { text: "나무바위", correct: false }
                 ],
-                explanation: "대한제국 고종 황제는 법령 제41호를 통해 울릉도를 군으로 승격시키고 독도(석도)를 직접 다스리는 부속 영토로 공식 선언해 주권을 수호했습니다.",
-                helperMessage: "대한민국의 옛 황제국 시절 이름으로, '대한OO'이라고 불러요!",
-                aiPrompt: "대한제국이라는 정답을 초등 3학년용 역사 상식과 연계하여 아주 쉬운 언어로 힌트를 마련해줘."
+                explanation: "촛대바위는 뾰족하게 솟은 형태가 촛대를 닮아 붙은 이름이에요.",
+                helperMessage: "생일 케이크 위에 꽂는 것과 이름이 같아요.",
+                aiPrompt: "촛대바위를 맞힐 수 있는 짧고 귀여운 힌트를 써줘."
             },
             {
-                category: "독도의 가치",
-                question: "우리가 독도를 지키고 사랑해야 하는 가장 올바른 마음가짐은 무엇일까요?",
+                category: "독도의 형태",
+                question: "동도와 서도 사이에는 무엇이 있을까요?",
                 options: [
-                    { text: "독도는 옛날부터 오늘날까지 역사적, 지리적으로 확실한 우리 땅이므로 소중히 가꾸어야 해요", correct: true },
-                    { text: "돈을 벌 수 있는 황금 광산이 있어서 지켜야 해요", correct: false },
-                    { text: "싸움을 좋아해서 우겨야 해요", correct: false },
-                    { text: "단순히 예쁜 놀이터라 생각해요", correct: false }
+                    { text: "좁은 바다 물길", correct: true },
+                    { text: "대형 고속도로", correct: false },
+                    { text: "넓은 잔디 운동장", correct: false },
+                    { text: "긴 강철 다리", correct: false }
                 ],
-                explanation: "독도는 풍부한 지하자원과 자연생태적 가치뿐만 아니라, 역사적 사료와 문헌에 일관되게 기록된 영토 주권의 상징이기 때문에 아끼고 지켜내야 합니다.",
-                helperMessage: "독도가 오랜 역사 동안 한결같이 우리 영토이자 한 가족이었다는 깊은 마음을 담은 보기가 정답이에요.",
-                aiPrompt: "독도가 확실한 우리 땅이라는 역사적 자긍심을 줄 수 있는 올바르고 따뜻한 힌트를 전해줘."
+                explanation: "동도와 서도는 서로 붙어 있지 않고, 바다 물길을 사이에 두고 떨어져 있어요.",
+                helperMessage: "두 섬 사이를 배가 지나는 장면을 떠올려 보세요.",
+                aiPrompt: "두 섬 사이에 바다 물길이 있다는 점을 힌트로 알려줘."
+            },
+            {
+                category: "독도의 높이",
+                question: "독도에서 더 높은 봉우리가 있는 쪽은 어디일까요?",
+                options: [
+                    { text: "서도", correct: true },
+                    { text: "동도", correct: false },
+                    { text: "둘 다 똑같다", correct: false },
+                    { text: "높은 곳이 전혀 없다", correct: false }
+                ],
+                explanation: "독도의 지형에서 가장 높은 지점은 서도 쪽에 있어요.",
+                helperMessage: "두 큰 섬 중 서쪽 섬이 더 높다고 알려져 있어요.",
+                aiPrompt: "독도에서 더 높은 쪽이 서도임을 유도하는 힌트를 작성해줘."
+            },
+            {
+                category: "독도의 시설과 지형",
+                question: "독도 등대가 자리한 곳은 주로 어느 섬일까요?",
+                options: [
+                    { text: "동도", correct: true },
+                    { text: "서도", correct: false },
+                    { text: "울릉도", correct: false },
+                    { text: "제주도", correct: false }
+                ],
+                explanation: "독도 등대는 동도의 높은 지형 부근에 자리해 항로를 비춰요.",
+                helperMessage: "사람과 시설이 비교적 모여 있는 쪽을 떠올려 보세요.",
+                aiPrompt: "독도 등대 위치가 동도라는 사실을 힌트로 알려줘."
+            },
+            {
+                category: "독도의 접근 지형",
+                question: "독도에 배가 접안하는 선착장은 주로 어느 쪽에 있을까요?",
+                options: [
+                    { text: "동도", correct: true },
+                    { text: "서도", correct: false },
+                    { text: "두 섬 모두 대형 항구", correct: false },
+                    { text: "바다 한가운데 부표", correct: false }
+                ],
+                explanation: "독도는 지형이 험하지만, 일반적으로 동도 쪽 선착장을 통해 접근해요.",
+                helperMessage: "관광객이 들어가는 대표 접안 지점을 떠올려 보세요.",
+                aiPrompt: "독도 선착장이 동도 쪽이라는 정보를 바탕으로 힌트를 써줘."
+            },
+            {
+                category: "독도의 지형 변화",
+                question: "독도의 절벽을 오랫동안 깎아 지금 모습으로 만드는 힘은 무엇일까요?",
+                options: [
+                    { text: "파도와 바람의 침식", correct: true },
+                    { text: "자동차 배기가스", correct: false },
+                    { text: "도시 공사 장비", correct: false },
+                    { text: "눈사람 만들기", correct: false }
+                ],
+                explanation: "독도 지형은 파도와 바람의 침식 작용으로 천천히 변화해 왔어요.",
+                helperMessage: "바닷가 바위를 계속 때리는 자연의 힘을 생각해 보세요.",
+                aiPrompt: "파도와 바람 침식이 정답임을 알게 하는 초등용 힌트를 작성해줘."
+            },
+            {
+                category: "독도의 지형 특징",
+                question: "독도 지형 설명으로 가장 알맞은 것은 무엇일까요?",
+                options: [
+                    { text: "평지가 적고 경사가 급한 바위섬이다", correct: true },
+                    { text: "아주 넓은 평야가 펼쳐진 섬이다", correct: false },
+                    { text: "사막 모래언덕이 이어진 섬이다", correct: false },
+                    { text: "강과 호수가 많은 섬이다", correct: false }
+                ],
+                explanation: "독도는 평지가 매우 적고, 경사가 급한 바위 지형이 중심이에요.",
+                helperMessage: "독도는 농사짓는 넓은 들판보다 바위가 많은 섬이에요.",
+                aiPrompt: "독도가 급경사 바위섬임을 떠올리게 하는 힌트를 줘."
+            },
+            {
+                category: "독도의 토양",
+                question: "독도에서 식물이 자라기 어려운 이유 중 하나는 무엇일까요?",
+                options: [
+                    { text: "흙층이 얕고 바람이 강하기 때문", correct: true },
+                    { text: "숲이 너무 울창하기 때문", correct: false },
+                    { text: "강물이 너무 많기 때문", correct: false },
+                    { text: "눈이 1년 내내 오기 때문", correct: false }
+                ],
+                explanation: "독도는 바위 지형이 많고 흙층이 얕아서 식물이 자라기 쉽지 않아요.",
+                helperMessage: "흙이 적고 바람이 세면 뿌리 내리기가 어렵겠죠?",
+                aiPrompt: "독도의 얕은 토양과 강한 바람을 연결해 힌트를 작성해줘."
+            },
+            {
+                category: "독도의 식생 지형",
+                question: "독도 식물이 주로 자리 잡는 곳은 어디일까요?",
+                options: [
+                    { text: "바위틈과 얕은 흙이 있는 곳", correct: true },
+                    { text: "넓은 논과 밭", correct: false },
+                    { text: "사막 모래언덕", correct: false },
+                    { text: "빙하 위", correct: false }
+                ],
+                explanation: "독도 식물은 바위틈과 좁은 토양 공간에 적응해 자라요.",
+                helperMessage: "독도에는 넓은 밭보다 바위 사이 공간이 많아요.",
+                aiPrompt: "독도 식물이 바위틈에서 자란다는 점을 힌트로 설명해줘."
+            },
+            {
+                category: "독도의 위치와 지형",
+                question: "맑은 날 울릉도에서 독도가 보이는 이유와 관련 깊은 것은 무엇일까요?",
+                options: [
+                    { text: "독도의 바위 봉우리가 바다 위로 높이 솟아 있기 때문", correct: true },
+                    { text: "독도 위에 거대한 전광판이 있기 때문", correct: false },
+                    { text: "독도 전체가 금색이기 때문", correct: false },
+                    { text: "항상 안개가 없기 때문", correct: false }
+                ],
+                explanation: "독도는 봉우리 지형이 바다 위로 솟아 있어 날씨가 좋으면 멀리서도 보여요.",
+                helperMessage: "멀리서 보이려면 주변보다 높이 솟아야 해요.",
+                aiPrompt: "독도 봉우리가 높이 솟은 지형이라는 힌트를 써줘."
+            },
+            {
+                category: "독도 주변 해저지형",
+                question: "독도 주변 바다는 해저가 어떻게 변하는 편일까요?",
+                options: [
+                    { text: "깊이가 비교적 급하게 변하는 편이다", correct: true },
+                    { text: "끝없이 얕은 갯벌만 이어진다", correct: false },
+                    { text: "모든 곳이 같은 깊이다", correct: false },
+                    { text: "강바닥처럼 완전히 평평하다", correct: false }
+                ],
+                explanation: "독도 주변은 해저 지형 변화가 크고 수심이 급하게 깊어지는 구간이 있어요.",
+                helperMessage: "해저산 주변은 보통 깊이가 급하게 달라져요.",
+                aiPrompt: "독도 주변 수심 변화가 크다는 사실을 쉬운 힌트로 전달해줘."
+            },
+            {
+                category: "독도의 파도 지형",
+                question: "독도 해안에 둥글거나 매끈해진 바위가 생기는 이유로 알맞은 것은 무엇일까요?",
+                options: [
+                    { text: "파도가 바위를 계속 깎고 부딪치기 때문", correct: true },
+                    { text: "바위가 스스로 움직이기 때문", correct: false },
+                    { text: "사람이 매일 사포질하기 때문", correct: false },
+                    { text: "눈이 녹아 바위를 칠하기 때문", correct: false }
+                ],
+                explanation: "파도는 오랜 시간 바위를 부딪치고 깎아 표면 모양을 바꿔요.",
+                helperMessage: "바닷가 자갈이 매끈해지는 이유와 같아요.",
+                aiPrompt: "파도 침식으로 바위 모양이 바뀐다는 점을 힌트로 작성해줘."
+            },
+            {
+                category: "독도의 안전 지형",
+                question: "독도에 내릴 때 날씨와 파도 상태를 꼭 확인해야 하는 가장 큰 이유는 무엇일까요?",
+                options: [
+                    { text: "해안이 바위 절벽이라 접안이 쉽지 않기 때문", correct: true },
+                    { text: "섬 전체가 유리로 되어 있기 때문", correct: false },
+                    { text: "섬이 매일 이동하기 때문", correct: false },
+                    { text: "비행기만 착륙할 수 있기 때문", correct: false }
+                ],
+                explanation: "독도는 해안이 험준하고 파도 영향이 커서 접안 가능 여부가 날씨에 크게 좌우돼요.",
+                helperMessage: "바다가 거칠고 바위가 많으면 배가 접근하기 어렵겠죠?",
+                aiPrompt: "독도 접안이 날씨·파도에 민감한 이유를 힌트로 설명해줘."
+            },
+            {
+                category: "독도의 경관 지형",
+                question: "독도 지형이 관광객에게 특별하게 보이는 이유로 알맞은 것은 무엇일까요?",
+                options: [
+                    { text: "기암괴석과 절벽이 독특한 경관을 만들기 때문", correct: true },
+                    { text: "섬 전체가 평평한 경기장이기 때문", correct: false },
+                    { text: "매일 무지개가 땅에서 솟기 때문", correct: false },
+                    { text: "모든 바위가 네모반듯하기 때문", correct: false }
+                ],
+                explanation: "독도는 다양한 기암괴석과 절벽 지형이 어우러져 독특한 풍경을 만들어요.",
+                helperMessage: "이상한 모양의 바위를 한자로 기암괴석이라고 불러요.",
+                aiPrompt: "독도의 기암괴석 경관을 떠올릴 수 있는 힌트를 제공해줘."
+            },
+            {
+                category: "독도의 형성과정",
+                question: "독도의 지형 나이를 말할 때 보통 어떤 특징을 함께 설명할까요?",
+                options: [
+                    { text: "오래된 화산 활동의 결과라는 점", correct: true },
+                    { text: "최근 10년 안에 생긴 인공섬이라는 점", correct: false },
+                    { text: "빙하가 녹아 어제 생겼다는 점", correct: false },
+                    { text: "강물이 만든 삼각주라는 점", correct: false }
+                ],
+                explanation: "독도는 오랜 지질시대 화산 활동으로 만들어진 오래된 자연 지형이에요.",
+                helperMessage: "독도는 아주 오래전 화산이 만든 섬으로 알려져 있어요.",
+                aiPrompt: "독도가 오래된 화산 지형임을 짚어주는 힌트를 작성해줘."
+            },
+            {
+                category: "독도의 방향 지형",
+                question: "동도와 서도의 이름이 생긴 이유로 가장 알맞은 것은 무엇일까요?",
+                options: [
+                    { text: "섬이 놓인 방향(동쪽·서쪽)을 따서", correct: true },
+                    { text: "섬 크기 순서를 따서", correct: false },
+                    { text: "동물이 많은 순서를 따서", correct: false },
+                    { text: "날씨 순서를 따서", correct: false }
+                ],
+                explanation: "동도와 서도는 위치한 방향을 기준으로 붙은 지형 이름이에요.",
+                helperMessage: "지도에서 오른쪽은 동쪽, 왼쪽은 서쪽이에요.",
+                aiPrompt: "동도·서도 명칭이 방향에서 왔다는 힌트를 줘."
+            },
+            {
+                category: "독도의 지형 용어",
+                question: "바다 위로 뾰족하게 솟은 작은 바위섬을 지형 용어로 부르면 무엇일까요?",
+                options: [
+                    { text: "암초 또는 바위섬", correct: true },
+                    { text: "평야", correct: false },
+                    { text: "고원", correct: false },
+                    { text: "삼각주", correct: false }
+                ],
+                explanation: "독도 주변에는 파도에 드러나 보이는 암초와 작은 바위섬이 많아요.",
+                helperMessage: "배가 지날 때 조심해야 하는 바위 지형을 떠올려 보세요.",
+                aiPrompt: "암초(바위섬) 개념을 어린이 눈높이 힌트로 설명해줘."
+            },
+            {
+                category: "독도의 해안선",
+                question: "독도의 해안선이 단순한 원 모양이 아닌 이유로 알맞은 것은 무엇일까요?",
+                options: [
+                    { text: "침식과 풍화로 굴곡이 많이 생겼기 때문", correct: true },
+                    { text: "자처럼 그어 만든 인공선이기 때문", correct: false },
+                    { text: "모래가 전혀 없어서 직선이기 때문", correct: false },
+                    { text: "강이 네모로 흘러서", correct: false }
+                ],
+                explanation: "파도와 바람이 오랫동안 작용해 독도 해안선은 굴곡이 발달해 있어요.",
+                helperMessage: "자연이 깎은 해안선은 보통 울퉁불퉁해요.",
+                aiPrompt: "독도 해안선 굴곡이 침식 때문이라는 힌트를 작성해줘."
+            },
+            {
+                category: "독도의 지형 분류",
+                question: "독도 지형을 한마디로 가장 잘 나타내는 말은 무엇일까요?",
+                options: [
+                    { text: "험준한 화산성 바위섬", correct: true },
+                    { text: "넓은 사막섬", correct: false },
+                    { text: "대하천 평야섬", correct: false },
+                    { text: "빙하지형 섬", correct: false }
+                ],
+                explanation: "독도는 화산성 암석으로 이루어진 험준한 바위 지형이 핵심이에요.",
+                helperMessage: "화산 + 바위 + 가파름, 세 단어를 합쳐 보세요.",
+                aiPrompt: "험준한 화산성 바위섬이라는 답을 유도하는 힌트를 줘."
+            },
+            {
+                category: "독도의 대표 경관",
+                question: "독도에서 '우리나라 모양과 닮았다'고 자주 소개되는 지형은 무엇일까요?",
+                options: [
+                    { text: "한반도 바위", correct: true },
+                    { text: "달 모양 바위", correct: false },
+                    { text: "별 모양 바위", correct: false },
+                    { text: "구름 모양 바위", correct: false }
+                ],
+                explanation: "한반도 바위는 이름처럼 우리나라 지도 모양을 닮아 알려진 독도의 지형 명소예요.",
+                helperMessage: "대한민국 지형 이름과 같은 단어가 들어가요.",
+                aiPrompt: "한반도 바위를 맞히게 돕는 직관적인 힌트를 써줘."
+            },
+            {
+                category: "독도의 지형 보전",
+                question: "독도의 바위 지형을 오래 지키기 위해 가장 필요한 태도는 무엇일까요?",
+                options: [
+                    { text: "지형을 훼손하지 않고 관찰 중심으로 탐방하기", correct: true },
+                    { text: "바위에 이름 새기기", correct: false },
+                    { text: "돌을 기념품으로 가져오기", correct: false },
+                    { text: "절벽에 낙서하기", correct: false }
+                ],
+                explanation: "독도 지형은 소중한 자연유산이라 훼손 없이 관찰하고 보호하는 태도가 중요해요.",
+                helperMessage: "자연을 사랑하는 방법은 가져가는 것이 아니라 지켜주는 거예요.",
+                aiPrompt: "독도 지형 보호 태도가 정답임을 알 수 있는 따뜻한 힌트를 작성해줘."
+            },
+            {
+                category: "독도의 종합 지형",
+                question: "다음 중 독도의 지형을 가장 바르게 설명한 문장은 무엇일까요?",
+                options: [
+                    { text: "동도·서도를 중심으로 한 화산성 바위섬이며 해안 절벽이 발달했다", correct: true },
+                    { text: "넓은 평야와 큰 강이 중심인 내륙형 섬이다", correct: false },
+                    { text: "사막 기후의 모래언덕 섬이다", correct: false },
+                    { text: "빙하가 지금도 섬 전체를 덮고 있다", correct: false }
+                ],
+                explanation: "독도는 동도·서도 중심의 화산성 바위섬이고, 가파른 해안 절벽과 다양한 바위 지형이 특징이에요.",
+                helperMessage: "독도 핵심 키워드: 동도, 서도, 화산섬, 바위 절벽.",
+                aiPrompt: "독도의 핵심 지형 특징을 모두 담은 정답 문장을 고를 수 있게 힌트를 줘."
             }
         ];
 
